@@ -25,6 +25,7 @@
     <script type="text/javascript"
         src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js">
 </script>
+    <script src="https://unpkg.com/swup@4"></script>
     <style>
         #map { 
             height: 200px;
@@ -90,6 +91,60 @@
         .ts-page-wrapper > .container {
             flex: 1 0 auto;
         }
+
+        .nav-container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .nav-link {
+            position: relative;
+            z-index: 2;
+        }
+
+        .nav-link.active {
+            background: linear-gradient(45deg, #7928CA, #FF0080);
+            color: white !important;
+        }
+
+        .nav-link:not(.active) {
+            background: transparent;
+        }
+
+        .nav-link:not(.active):hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 3px !important;
+            }
+            
+            .nav-link {
+                padding: 8px 15px !important;
+                font-size: 0.9em;
+            }
+        }
+
+        .transition-fade {
+            transition: none;
+            opacity: 1;
+        }
+
+        html.is-changing {
+            background-color: #26005F !important;
+        }
+
+        /* Mantener el fondo durante la transición */
+        .ts-background {
+            transition: none !important;
+        }
+
+        /* Hacer que el contenido nuevo aparezca instantáneamente */
+        .swup-transition-main {
+            transition: none !important;
+        }
     </style>
 
     <!-- Agregar meta tags de seguridad -->
@@ -97,6 +152,8 @@
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta http-equiv="X-Frame-Options" content="DENY">
     <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 </head>
 <body class="has-loading-screen ts-theme-dark">
@@ -106,24 +163,43 @@
     <!--*************************************************************************************************************-->
 
     <div class="ts-page-wrapper">
-        <div class="container">
+        <div id="swup" class="container transition-fade">
 
             <!--NAVIGATION ******************************************************************************************-->
             <header id="header">
                 <nav class="navbar navbar-dark ts-separate-bg-element">
-                    <a class="navbar-brand" href="#" style="display: flex; align-items: center;">
+                    <a class="navbar-brand" href="index.html" style="display: flex; align-items: center;">
                         <div style="display: flex; align-items: center; gap: 10px;">
                             <img src="https://flagcdn.com/w20/cl.png" alt="Bandera de Chile" style="width: 20px; height: auto;">
                             <img src="assets/img/logo.png" alt="">
                         </div>
                     </a>
-                    <!--end navbar-brand-->
-                    <button class="navbar-toggler ts-open-side-panel" type="button" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <!--end navbar-toggler-->
+                    <div class="navbar-nav ml-auto custom-nav">
+                        <div class="nav-container" style="
+                            display: flex;
+                            background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.1));
+                            border-radius: 30px;
+                            padding: 5px;
+                            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
+                            <a href="index.html" class="nav-link active" style="
+                                color: white;
+                                text-decoration: none;
+                                padding: 10px 25px;
+                                border-radius: 25px;
+                                transition: all 0.4s ease;
+                                margin: 0 5px;
+                                font-weight: 500;">Inicio</a>
+                            <a href="servicios.html" class="nav-link" style="
+                                color: white;
+                                text-decoration: none;
+                                padding: 10px 25px;
+                                border-radius: 25px;
+                                transition: all 0.4s ease;
+                                margin: 0 5px;
+                                font-weight: 500;">Servicios</a>
+                        </div>
+                    </div>
                 </nav>
-                <!--end navbar-->
             </header>
             <!--end #header-->
 
@@ -137,6 +213,17 @@
                             <p>
                                 Computer Development Services for Chile and the world.<br>Send us your email to contact us.
                             </p>
+                            
+                            <!-- Contact Form Section -->
+                            <div class="container-fluid">
+                                <form id="form-contact" style="margin-top: 20px; margin-bottom: 30px;">
+                                    <input type="text" name="from_name" id="nombre" placeholder="Name" class="form-control mb-3" style="background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: white; border-radius: 8px; padding: 12px; width: 100%; backdrop-filter: blur(5px);"><br>
+                                    <input type="email" name="reply_to" id="correo" placeholder="Email" class="form-control mb-3" style="background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: white; border-radius: 8px; padding: 12px; width: 100%; backdrop-filter: blur(5px);"><br>
+                                    <textarea name="message" id="mensaje" placeholder="Message" class="form-control mb-3" style="background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: white; border-radius: 8px; padding: 12px; width: 100%; height: 150px; backdrop-filter: blur(5px);"></textarea><br>
+                                    <div class="form-contact-status"></div>
+                                    <button type="submit" class="btn btn-primary" style="background: rgba(255, 255, 255, 0.2); border: none; padding: 12px 30px; border-radius: 8px; color: white; font-weight: 500; transition: all 0.3s ease;">Send</button>
+                                </form>
+                            </div>
                             
                             <!-- Weather Widget Section -->
                             <div class="weather-container" style="margin-bottom: 40px;">
@@ -206,17 +293,6 @@
                                 </a>
                             </div>
 
-                            <!-- Contact Form Section -->
-                            <div class="container-fluid">
-                                <h3>Contact</h3>
-                                <form id="form-contact" style="margin-top: 20px; margin-bottom: 30px;">
-                                    <input type="text" name="from_name" id="nombre" placeholder="Name" class="form-control mb-3" style="background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: white; border-radius: 8px; padding: 12px; width: 100%; backdrop-filter: blur(5px);"><br>
-                                    <input type="email" name="reply_to" id="correo" placeholder="Email" class="form-control mb-3" style="background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: white; border-radius: 8px; padding: 12px; width: 100%; backdrop-filter: blur(5px);"><br>
-                                    <textarea name="message" id="mensaje" placeholder="Message" class="form-control mb-3" style="background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: white; border-radius: 8px; padding: 12px; width: 100%; height: 150px; backdrop-filter: blur(5px);"></textarea><br>
-                                    <div class="form-contact-status"></div>
-                                    <button type="submit" class="btn btn-primary" style="background: rgba(255, 255, 255, 0.2); border: none; padding: 12px 30px; border-radius: 8px; color: white; font-weight: 500; transition: all 0.3s ease;">Send</button>
-                                </form>
-                            </div>
                             <h3>Location</h3>
                             <p style="font-size: 14px; margin-bottom: 10px;">Santiago de Chile, Region Metropolitana, Las Condes</p>
                             <div id="map" class="map ts-height__200px mb-5" style="width: 100%; height: calc(50vh - 100px); min-height: 200px; max-height: 400px; margin: 0 auto;">
@@ -308,20 +384,20 @@
     <!--************ SIDE PANEL *************************************************************************************-->
     <!--*************************************************************************************************************-->
 
-     <div class="ts-side-panel" data-bg-color="#001330">
+     <!-- <div class="ts-side-panel" data-bg-color="#001330">
         <a href="#" class="ts-close-side-panel">
-            <i class="far fa-times-circle"></i>
+            <i class="fas fa-times"></i>
         </a>
        <div>
         <h3>Informacion</h3>
        </div>
-                <!--end row-->
+              
             </section>
-            <!--end section-->
+         
         </div>
-        <!--end container-fluid-->
-    </div>
-    <!--end ts-side-panel-->
+     
+    </div> -->
+    <!--end ts-side-panel Desactivado-->
 
     <!--*************************************************************************************************************-->
     <!--************ JS SCRIPTS *************************************************************************************-->
@@ -496,6 +572,16 @@
         
         // Actualizar cada 5 minutos
         setInterval(getUserLocation, 300000);
+    </script>
+
+    <script>
+        const swup = new Swup({
+            animateHistoryBrowsing: true,
+            cache: true,
+            preload: true,
+            animationDuration: 0,
+            timeout: 0
+        });
     </script>
 
 </body>
