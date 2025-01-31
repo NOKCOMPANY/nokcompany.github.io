@@ -184,23 +184,26 @@
     <script>
         // ... código del mapa de Leaflet ...
         var map = L.map('map').setView([-33.42492, -70.53926], 13);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
-    L.marker([-33.42492, -70.53926]).addTo(map)
-    .bindPopup('Las Condes, RM Chile')
-    .openPopup();
-        // Inicialización de EmailJS 
-          emailjs.init('QmbL_ojcNKBk5vkKAv'); // Public KEY
+         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+         attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
+         L.marker([-33.42492, -70.53926]).addTo(map)
+          .bindPopup('Las Condes, RM Chile')
+         .openPopup();
+     // Inicialización de EmailJS 
+        emailjs.init('QmbL_ojcNKBk5vkKAv'); // Public KEY
     
         document.getElementById('myForm').addEventListener('submit', function(event) {
             event.preventDefault();
     
            emailjs.sendForm('NOKCOMPANY', '__ejs-test-mail-service__', this, 'QmbL_ojcNKBk5vkKAv')
-                .then(function() {
-                    // ...
+           .then(function(response) {
+                $('.form-contact-status').html("<div class='alert alert-success mt-3'>Message has been sent!</div>");
+                // Puedes limpiar el formulario o redirigir a una página de agradecimiento.
+                 $form.trigger("reset"); // esto limpia el formulario
                 }, function(error) {
-                    // ...
-                });
+                $('.form-contact-status').html("<div class='alert alert-danger mt-3'>Error al enviar el mensaje. Inténtalo de nuevo.</div>");
+                console.error('FAILED...', error);
+            });
         });
     
     </script>
