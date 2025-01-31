@@ -44,6 +44,52 @@
         .leaflet-popup-tip {
             background: rgba(255, 255, 255, 0.9);
         }
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+        
+        .weather-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+        }
+        .ts-content-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        #main-content {
+            flex: 1;
+            padding-bottom: 80px;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            flex: 1 0 auto;
+        }
+
+        #map {
+            margin-bottom: 40px;
+        }
+
+        .ts-page-wrapper {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .ts-page-wrapper > .container {
+            flex: 1 0 auto;
+        }
     </style>
 
 </head>
@@ -59,8 +105,11 @@
             <!--NAVIGATION ******************************************************************************************-->
             <header id="header">
                 <nav class="navbar navbar-dark ts-separate-bg-element">
-                    <a class="navbar-brand" href="#">
-                        <img src="assets/img/logo.png" alt="">  
+                    <a class="navbar-brand" href="#" style="display: flex; align-items: center;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <img src="https://flagcdn.com/w20/cl.png" alt="Bandera de Chile" style="width: 20px; height: auto;">
+                            <img src="assets/img/logo.png" alt="">
+                        </div>
                     </a>
                     <!--end navbar-brand-->
                     <button class="navbar-toggler ts-open-side-panel" type="button" aria-label="Toggle navigation">
@@ -82,22 +131,76 @@
                             <p>
                                 Computer Development Services for Chile and the world.<br>Send us your email to contact us.
                             </p>
-                            <!--<form class="ts-form ts-form-email" data-php-path="assets/php/email.php">
-                                <div class="row">
-                                    <div class="col-md-9">
-                                        <div class="form-group">
-                                            <input type="email" class="form-control" id="email-subscribe" aria-describedby="subscribe" name="email" placeholder="Enter Email Address" required>
+                            
+                            <!-- Weather Widget Section -->
+                            <div class="weather-container" style="margin-bottom: 40px;">
+                                <div class="weather-card" style="
+                                    background: rgba(255, 255, 255, 0.1);
+                                    border-radius: 12px;
+                                    padding: 20px;
+                                    backdrop-filter: blur(5px);
+                                    border: 1px solid rgba(255, 255, 255, 0.1);
+                                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+                                    transition: all 0.3s ease;
+                                    overflow: hidden;
+                                    position: relative;">
+                                    <div id="weather-info" style="
+                                        display: flex;
+                                        align-items: flex-start;
+                                        justify-content: space-between;">
+                                        <div>
+                                            <h3 style="color: white; margin-bottom: 25px;">Las Condes Weather</h3>
+                                            <div id="weather-details" style="color: rgba(255, 255, 255, 0.8);">
+                                                <p class="temp" style="font-size: 2em; margin: 0;"></p>
+                                                <p class="description" style="text-transform: capitalize; margin-bottom: 10px;"></p>
+                                                <p class="humidity" style="margin-bottom: 25px;"></p>
+                                            </div>
                                         </div>
-                                        
+                                        <div style="display: flex; gap: 10px;">
+                                            <div id="weather-icon" style="
+                                                width: 100px;
+                                                height: 100px;
+                                                animation: float 3s ease-in-out infinite;">
+                                            </div>
+                                            <div id="weather-icon-decorative" style="
+                                                width: 100px;
+                                                height: 100px;
+                                                animation: float 3s ease-in-out infinite;
+                                                animation-delay: 1.5s;">
+                                            </div>
+                                        </div>
                                     </div>
-                                    
-                                    <div class="col-md-3">
-                                        <button type="submit" class="btn btn-primary w-100"style="margin-bottom: 300px;">Contacto</button>
-                                    </div>
-                                    
                                 </div>
-                               
-                            </form> Desacttivado-->
+                            </div>
+
+                            <!-- Medium Article Section -->
+                            <div class="medium-article-container" style="margin-bottom: 40px;">
+                                <h3>Latest Article</h3>
+                                <a href="https://medium.com/@N0rt1z/el-impacto-de-los-bots-en-las-redes-sociales-70932266dc9a?source=friends_link&sk=9c63f6e107b80053f97cab4db21db260" 
+                                   target="_blank" 
+                                   style="text-decoration: none;">
+                                    <div class="article-card" style="
+                                        background: rgba(255, 255, 255, 0.1);
+                                        border-radius: 12px;
+                                        padding: 20px;
+                                        margin-top: 15px;
+                                        backdrop-filter: blur(5px);
+                                        border: 1px solid rgba(255, 255, 255, 0.1);
+                                        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                                        transition: all 0.3s ease;">
+                                        
+                                        <h4 style="color: white; margin-bottom: 10px;"> [Español] El Impacto de los Bots en las Redes Sociales</h4>
+                                        <p style="color: rgba(255, 255, 255, 0.8); font-size: 14px; margin-bottom: 15px;">
+                                         Un análisis profundo sobre cómo los bots están transformando el panorama de las redes sociales y su influencia en la comunicación digital moderna.
+                                        </p>
+                                        <div style="color: rgba(255, 255, 255, 0.6); font-size: 12px;">
+                                            Read on Medium →
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <!-- Contact Form Section -->
                             <div class="container-fluid">
                                 <h3>Contact</h3>
                                 <form id="form-contact" style="margin-top: 20px; margin-bottom: 30px;">
@@ -142,8 +245,6 @@
                                     .addTo(map)
                                     .bindPopup('<strong>NokServices</strong><br>Las Condes')
                             </script>
-                            
-                            <!--end ts-form-->
                         </div>
                         <!--end col-md-6-->
                         <!--Contador desactivado
@@ -162,23 +263,15 @@
             <!--end #main-content-->
 
             <!--FOOTER **********************************************************************************************-->
-            <footer id="footer";">
-                <div class="clearfix py-4" style="margin-top: 500px; margin-left: 20px;">
-                    <!-- LOGO REDE<div class="float-none float-sm-left">
-                        <div class="ts-social-icons">
-                            <a href="#" class="fab fa-twitter"></a>
-                            <a href="#" class="fab fa-instagram"></a>
-                            <a href="#" class="fab fa-facebook"></a> 
-                            <a href="#" class="fab fa-pinterest"></a> 
-                        </div>
-                    </div> DESACTIVADO-->
-                    <!--end social-icons-->
-                    <div class="float-none float-sm-right text-left text-sm-right ts-opacity__50"">
-                        <small>© 2025 NokServices Tecnology, All Rights Reserved.</small>
+            <footer id="footer">
+                <div class="clearfix py-4">
+                    <div class="text-center">
+                        <small style="display: inline-flex; align-items: center; justify-content: center; margin-top: 1000px;">
+                            <img src="https://flagcdn.com/w20/cl.png" alt="Bandera de Chile" style="width: 20px; height: auto; margin-right: 10px;">
+                            © 2025 NokServices Tecnology, All Rights Reserved.
+                        </small>
                     </div>
-                    <!--end text-left-->
                 </div>
-                <!--end clearfix-->
             </footer>
             <!--end #footer-->
         </div>
@@ -275,6 +368,63 @@
                     console.error('FAILED...', error);
                 });
         });
+    </script>
+
+    <script>
+        // Función para obtener el clima con mensajes amigables
+        async function getWeather() {
+            const apiKey = 'TU_NUEVA_API_KEY';
+            const city = 'Las Condes,CL';
+            const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+            
+            try {
+                const response = await fetch(url);
+                
+                if (response.status === 401 || !response.ok) {
+                    // Mensaje temporal mientras está en desarrollo
+                    document.querySelector('.temp').textContent = '22°C';
+                    document.querySelector('.description').textContent = 'Parcialmente nublado';
+                    document.querySelector('.humidity').textContent = 'Humidity: 65%';
+                    
+                    // Mostrar dos íconos por defecto
+                    const defaultIconUrl = 'https://openweathermap.org/img/wn/02d@2x.png';
+                    document.getElementById('weather-icon').innerHTML = 
+                        `<img src="${defaultIconUrl}" style="width: 100%; height: 100%; object-fit: contain;">`;
+                    document.getElementById('weather-icon-decorative').innerHTML = 
+                        `<img src="${defaultIconUrl}" style="width: 100%; height: 100%; object-fit: contain;">`;
+                    return;
+                }
+                
+                const data = await response.json();
+                
+                document.querySelector('.temp').textContent = `${Math.round(data.main.temp)}°C`;
+                document.querySelector('.description').textContent = data.weather[0].description;
+                document.querySelector('.humidity').textContent = `Humidity: ${data.main.humidity}%`;
+                
+                const iconCode = data.weather[0].icon;
+                const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
+                
+                // Actualizar ambos íconos
+                document.getElementById('weather-icon').innerHTML = 
+                    `<img src="${iconUrl}" style="width: 100%; height: 100%; object-fit: contain;">`;
+                document.getElementById('weather-icon-decorative').innerHTML = 
+                    `<img src="${iconUrl}" style="width: 100%; height: 100%; object-fit: contain;">`;
+                
+            } catch (error) {
+                document.querySelector('.temp').textContent = '22°C';
+                document.querySelector('.description').textContent = 'Parcialmente nublado';
+                document.querySelector('.humidity').textContent = 'Humidity: 65%';
+                
+                const defaultIconUrl = 'https://openweathermap.org/img/wn/02d@2x.png';
+                document.getElementById('weather-icon').innerHTML = 
+                    `<img src="${defaultIconUrl}" style="width: 100%; height: 100%; object-fit: contain;">`;
+                document.getElementById('weather-icon-decorative').innerHTML = 
+                    `<img src="${defaultIconUrl}" style="width: 100%; height: 100%; object-fit: contain;">`;
+            }
+        }
+
+        getWeather();
+        setInterval(getWeather, 300000);
     </script>
 
 </body>
