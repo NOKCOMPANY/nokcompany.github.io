@@ -182,19 +182,13 @@
     <script src="assets/js/custom.js"></script>
     <!-- EMAIL JS -->
     <script>
-        var map = L.map('map').setView([-33.42492, -70.53926], 13);
-
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
-
-        L.marker([-33.42492, -70.53926]).addTo(map)
-            .bindPopup('Las Condes, RM Chile')
-            .openPopup();
-    </script>
-    <script>
         // ... código del mapa de Leaflet ...
-    
+        var map = L.map('map').setView([-33.42492, -70.53926], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
+    L.marker([-33.42492, -70.53926]).addTo(map)
+    .bindPopup('Las Condes, RM Chile')
+    .openPopup();
         // Inicialización de EmailJS (después del mapa)
           emailjs.init('QmbL_ojcNKBk5vkKAv'); // Reemplaza con tu Public KEY
     
