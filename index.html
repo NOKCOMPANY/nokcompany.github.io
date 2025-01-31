@@ -190,7 +190,7 @@
     document.getElementById('myForm').addEventListener('submit', function(event) {
         event.preventDefault();
 
-        emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', this) // Reemplaza con tus IDs
+        emailjs.sendForm(this) // Reemplaza con tus IDs
             .then(function() {
                 console.log('Mensaje enviado!');
                 // Puedes mostrar un mensaje al usuario
