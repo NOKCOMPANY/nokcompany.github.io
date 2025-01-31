@@ -191,11 +191,12 @@
          .openPopup();
      // Inicialización de EmailJS 
         emailjs.init('QmbL_ojcNKBk5vkKA'); // Public KEY
-    
+        
         $("#form-contact").submit(function(e) {
            e.preventDefault();
            var form = $(this).get(0);
-    
+         $("#form-contact").submit(function(e) {
+         e.preventDefault(); 
            emailjs.sendForm('NOKCOMPANY', 'template_jbnt66h', form, 'QmbL_ojcNKBk5vkKA')
            .then(function(response) {
                 $('.form-contact-status').html("<div class='alert alert-success mt-3'>Message has been sent!</div>");
