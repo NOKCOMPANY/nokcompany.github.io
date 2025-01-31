@@ -149,7 +149,7 @@
                                         align-items: flex-start;
                                         justify-content: space-between;">
                                         <div>
-                                            <h3 style="color: white; margin-bottom: 25px;">Las Condes Weather</h3>
+                                            <h3 id="location-name" style="color: white; margin-bottom: 25px;">Clima Local</h3>
                                             <div id="weather-details" style="color: rgba(255, 255, 255, 0.8);">
                                                 <p class="temp" style="font-size: 2em; margin: 0;"></p>
                                                 <p class="description" style="text-transform: capitalize; margin-bottom: 10px;"></p>
@@ -371,60 +371,76 @@
     </script>
 
     <script>
-        // Función para obtener el clima con mensajes amigables
-        async function getWeather() {
+        async function getWeatherByCoords(lat, lon) {
             const apiKey = 'TU_NUEVA_API_KEY';
-            const city = 'Las Condes,CL';
-            const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+            const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=es`;
             
             try {
                 const response = await fetch(url);
-                
-                if (response.status === 401 || !response.ok) {
-                    // Mensaje temporal mientras está en desarrollo
-                    document.querySelector('.temp').textContent = '22°C';
-                    document.querySelector('.description').textContent = 'Parcialmente nublado';
-                    document.querySelector('.humidity').textContent = 'Humidity: 65%';
-                    
-                    // Mostrar dos íconos por defecto
-                    const defaultIconUrl = 'https://openweathermap.org/img/wn/02d@2x.png';
-                    document.getElementById('weather-icon').innerHTML = 
-                        `<img src="${defaultIconUrl}" style="width: 100%; height: 100%; object-fit: contain;">`;
-                    document.getElementById('weather-icon-decorative').innerHTML = 
-                        `<img src="${defaultIconUrl}" style="width: 100%; height: 100%; object-fit: contain;">`;
-                    return;
-                }
-                
                 const data = await response.json();
                 
+                document.getElementById('location-name').textContent = data.name;
                 document.querySelector('.temp').textContent = `${Math.round(data.main.temp)}°C`;
                 document.querySelector('.description').textContent = data.weather[0].description;
-                document.querySelector('.humidity').textContent = `Humidity: ${data.main.humidity}%`;
+                document.querySelector('.humidity').textContent = `Humedad: ${data.main.humidity}%`;
                 
                 const iconCode = data.weather[0].icon;
                 const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
                 
-                // Actualizar ambos íconos
                 document.getElementById('weather-icon').innerHTML = 
                     `<img src="${iconUrl}" style="width: 100%; height: 100%; object-fit: contain;">`;
                 document.getElementById('weather-icon-decorative').innerHTML = 
                     `<img src="${iconUrl}" style="width: 100%; height: 100%; object-fit: contain;">`;
                 
             } catch (error) {
-                document.querySelector('.temp').textContent = '22°C';
-                document.querySelector('.description').textContent = 'Parcialmente nublado';
-                document.querySelector('.humidity').textContent = 'Humidity: 65%';
-                
-                const defaultIconUrl = 'https://openweathermap.org/img/wn/02d@2x.png';
-                document.getElementById('weather-icon').innerHTML = 
-                    `<img src="${defaultIconUrl}" style="width: 100%; height: 100%; object-fit: contain;">`;
-                document.getElementById('weather-icon-decorative').innerHTML = 
-                    `<img src="${defaultIconUrl}" style="width: 100%; height: 100%; object-fit: contain;">`;
+                console.error('Error fetching weather:', error);
+                showDefaultWeather();
             }
         }
 
-        getWeather();
-        setInterval(getWeather, 300000);
+        function showDefaultWeather() {
+            document.getElementById('location-name').textContent = 'Las Condes';
+            document.querySelector('.temp').textContent = '22°C';
+            document.querySelector('.description').textContent = 'Parcialmente nublado';
+            document.querySelector('.humidity').textContent = 'Humedad: 65%';
+            
+            const defaultIconUrl = 'https://openweathermap.org/img/wn/02d@2x.png';
+            document.getElementById('weather-icon').innerHTML = 
+                `<img src="${defaultIconUrl}" style="width: 100%; height: 100%; object-fit: contain;">`;
+            document.getElementById('weather-icon-decorative').innerHTML = 
+                `<img src="${defaultIconUrl}" style="width: 100%; height: 100%; object-fit: contain;">`;
+        }
+
+        function getUserLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    // Éxito
+                    (position) => {
+                        getWeatherByCoords(position.coords.latitude, position.coords.longitude);
+                    },
+                    // Error
+                    (error) => {
+                        console.error('Error getting location:', error);
+                        showDefaultWeather();
+                    },
+                    // Opciones
+                    {
+                        enableHighAccuracy: true,
+                        timeout: 5000,
+                        maximumAge: 0
+                    }
+                );
+            } else {
+                console.log('Geolocation is not supported by this browser.');
+                showDefaultWeather();
+            }
+        }
+
+        // Iniciar la solicitud de ubicación cuando se carga la página
+        getUserLocation();
+        
+        // Actualizar cada 5 minutos
+        setInterval(getUserLocation, 300000);
     </script>
 
 </body>
