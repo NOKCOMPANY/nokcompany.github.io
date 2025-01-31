@@ -17,6 +17,9 @@
    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
     crossorigin=""></script>
+    <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js">
+</script>
     <style>
         #map { height: 200px; } 
     </style>
@@ -171,7 +174,6 @@
 	<script src="assets/js/popper.min.js"></script>
 	<script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/imagesloaded.pkgd.min.js"></script>
-    <script src="http://maps.google.com/maps/api/js?key=AIzaSyBEDfNcQRmKQEyulDN8nGWjLYPm8s4YB58"></script>
     <script src="assets/js/jquery.magnific-popup.min.js"></script>
 	<script src="assets/js/jquery.countdown.min.js"></script>
 	<script src="assets/js/jquery.validate.min.js"></script>
@@ -180,24 +182,6 @@
     <script src="assets/js/custom.js"></script>
     <!-- EMAIL JS -->
     <script>
-        (function(){
-            emailjs.init({
-              publicKey: 'YOUR_PUBLIC_KEY', // Reemplaza con tu Public KEY
-            });
-        })();
-
-        document.getElementById('myForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-
-            emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', this) // Reemplaza con tus IDs
-                .then(function() {
-                    console.log('Mensaje enviado!');
-                    // Puedes mostrar un mensaje al usuario
-                }, function(error) {
-                    console.log('Error:', error);
-                    alert("Error al enviar el mensaje. Por favor, inténtalo de nuevo."); // Agrega una alerta de error
-                });
-        });
         var map = L.map('map').setView([-33.42492, -70.53926], 13);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -207,6 +191,24 @@
         L.marker([-33.42492, -70.53926]).addTo(map)
             .bindPopup('Las Condes, RM Chile')
             .openPopup();
+    </script>
+    <script>
+        // ... código del mapa de Leaflet ...
+    
+        // Inicialización de EmailJS (después del mapa)
+          emailjs.init('QmbL_ojcNKBk5vkKAv'); // Reemplaza con tu Public KEY
+    
+        document.getElementById('myForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+    
+           emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', this)
+                .then(function() {
+                    // ...
+                }, function(error) {
+                    // ...
+                });
+        });
+    
     </script>
 
 </body>
