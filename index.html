@@ -76,14 +76,15 @@
                                 </div>
                                
                             </form> Desacttivado-->
-                            <div class="container-fluid" >
+                            <div class="container-fluid">
                                 <h3>Contacto</h3>
-                                <form id="myForm" style="margin-top: 20px; margin-bottom: 30px;">
-                                    <input type="text" name="nombre" id="nombre" placeholder="Nombre"><br>
-                                    <input type="email" name="correo" id="correo" placeholder="Correo"><br>
+                                <form id="form-contact" style="margin-top: 20px; margin-bottom: 30px;">
+                                    <input type="text" name="from_name" id="nombre" placeholder="Nombre"><br>
+                                    <input type="email" name="reply_to" id="correo" placeholder="Correo"><br>
+                                    <div class="form-contact-status"></div>
                                     <button type="submit">Enviar</button>
                                 </form>
-                         </div>
+                            </div>
                             <h3>Ubicación</h3>
                             <div id="map" class="map ts-height__200px mb-5" style="width: 100%; height: calc(50vh - 100px); min-height: 200px; max-height: 400px; margin: 0 auto;">
                             </div>
@@ -206,22 +207,25 @@
 
     <script src="assets/js/custom.js"></script>
     <script>
-            // Inicialización de EmailJS 
-            emailjs.init('QmbL_ojcNKBk5vkKA');
+        // Inicialización de EmailJS 
+        (function() {
+            emailjs.init('4yv6lNv3D75wM1BVV');
+        })();
+        
+        document.getElementById('form-contact').addEventListener('submit', function(e) {
+            e.preventDefault();
             
-            $("#form-contact").submit(function(e) {
-                e.preventDefault();
-                var form = $(this).get(0);
-                
-                emailjs.sendForm('NOKCOMPANY', 'template_jbnt66h', form, 'QmbL_ojcNKBk5vkKA')
+            emailjs.sendForm('NOKCOMPANY', 'template_jbnt66h', this, '4yv6lNv3D75wM1BVV')
                 .then(function(response) {
-                    $('.form-contact-status').html("<div class='alert alert-success mt-3'>Message has been sent!</div>");
-                    form.reset();
+                    document.querySelector('.form-contact-status').innerHTML = 
+                        "<div class='alert alert-success mt-3'>¡Mensaje enviado con éxito!</div>";
+                    e.target.reset();
                 }, function(error) {
-                    $('.form-contact-status').html("<div class='alert alert-danger mt-3'>Error al enviar el mensaje. Inténtalo de nuevo.</div>");
+                    document.querySelector('.form-contact-status').innerHTML = 
+                        "<div class='alert alert-danger mt-3'>Error al enviar el mensaje. Inténtalo de nuevo.</div>";
                     console.error('FAILED...', error);
                 });
-            });
+        });
     </script>
 
 </body>
