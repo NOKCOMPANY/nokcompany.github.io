@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="author" content="NokServices">
 
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/img/logo.png">
+    <link rel="shortcut icon" type="image/png" href="assets/img/logo.png">
+    <link rel="apple-touch-icon" href="assets/img/logo.png">
+
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:400,500,600">
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="assets/font-awesome/css/fontawesome-all.min.css">
@@ -21,7 +26,24 @@
         src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js">
 </script>
     <style>
-        #map { height: 200px; } 
+        #map { 
+            height: 200px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .leaflet-container {
+            border-radius: 12px;
+        }
+        .leaflet-popup-content-wrapper {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(5px);
+            border-radius: 8px;
+        }
+        .leaflet-popup-tip {
+            background: rgba(255, 255, 255, 0.9);
+        }
     </style>
 
 </head>
@@ -77,23 +99,33 @@
                                
                             </form> Desacttivado-->
                             <div class="container-fluid">
-                                <h3>Contacto</h3>
+                                <h3>Contact</h3>
                                 <form id="form-contact" style="margin-top: 20px; margin-bottom: 30px;">
-                                    <input type="text" name="from_name" id="nombre" placeholder="Nombre"><br>
-                                    <input type="email" name="reply_to" id="correo" placeholder="Correo"><br>
+                                    <input type="text" name="from_name" id="nombre" placeholder="Name" class="form-control mb-3" style="background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: white; border-radius: 8px; padding: 12px; width: 100%; backdrop-filter: blur(5px);"><br>
+                                    <input type="email" name="reply_to" id="correo" placeholder="Email" class="form-control mb-3" style="background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: white; border-radius: 8px; padding: 12px; width: 100%; backdrop-filter: blur(5px);"><br>
+                                    <textarea name="message" id="mensaje" placeholder="Message" class="form-control mb-3" style="background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: white; border-radius: 8px; padding: 12px; width: 100%; height: 150px; backdrop-filter: blur(5px);"></textarea><br>
                                     <div class="form-contact-status"></div>
-                                    <button type="submit">Enviar</button>
+                                    <button type="submit" class="btn btn-primary" style="background: rgba(255, 255, 255, 0.2); border: none; padding: 12px 30px; border-radius: 8px; color: white; font-weight: 500; transition: all 0.3s ease;">Send</button>
                                 </form>
                             </div>
-                            <h3>Ubicación</h3>
+                            <h3>Location</h3>
+                            <p style="font-size: 14px; margin-bottom: 10px;">Santiago de Chile, Region Metropolitana, Las Condes</p>
                             <div id="map" class="map ts-height__200px mb-5" style="width: 100%; height: calc(50vh - 100px); min-height: 200px; max-height: 400px; margin: 0 auto;">
                             </div>
                             <script>
                                 // Inicializar el mapa de Leaflet directamente
-                                var map = L.map('map').setView([-33.4145, -70.5827], 15);
+                                var map = L.map('map', {
+                                    zoomControl: false // Ocultar controles de zoom por defecto
+                                }).setView([-33.4145, -70.5827], 15);
                                 
-                                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                                    attribution: '© OpenStreetMap contributors'
+                                // Agregar controles de zoom en la esquina superior derecha
+                                L.control.zoom({
+                                    position: 'topright'
+                                }).addTo(map);
+                                
+                                L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+                                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+                                    maxZoom: 19
                                 }).addTo(map);
                                 
                                 // Crear un icono rojo personalizado
@@ -108,7 +140,7 @@
                                 
                                 L.marker([-33.4145, -70.5827], {icon: redIcon})
                                     .addTo(map)
-                                    .bindPopup('NokServices - Las Condes')
+                                    .bindPopup('<strong>NokServices</strong><br>Las Condes')
                             </script>
                             
                             <!--end ts-form-->
@@ -215,14 +247,31 @@
         document.getElementById('form-contact').addEventListener('submit', function(e) {
             e.preventDefault();
             
+            const nombre = document.getElementById('nombre').value.trim();
+            const correo = document.getElementById('correo').value.trim();
+            const mensaje = document.getElementById('mensaje').value.trim();
+            
+            if (!nombre || !correo || !mensaje) {
+                document.querySelector('.form-contact-status').innerHTML = 
+                    "<div class='alert alert-danger mt-3'>Please complete all form fields / Por favor, complete todos los campos del formulario.</div>";
+                return;
+            }
+            
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(correo)) {
+                document.querySelector('.form-contact-status').innerHTML = 
+                    "<div class='alert alert-danger mt-3'>Please enter a valid email address / Por favor, ingrese un correo electrónico válido.</div>";
+                return;
+            }
+
             emailjs.sendForm('NOKCOMPANY', 'template_jbnt66h', this, '4yv6lNv3D75wM1BVV')
                 .then(function(response) {
                     document.querySelector('.form-contact-status').innerHTML = 
-                        "<div class='alert alert-success mt-3'>¡Mensaje enviado con éxito!</div>";
+                        "<div class='alert alert-success mt-3'>Message sent successfully! / ¡Mensaje enviado con éxito!</div>";
                     e.target.reset();
                 }, function(error) {
                     document.querySelector('.form-contact-status').innerHTML = 
-                        "<div class='alert alert-danger mt-3'>Error al enviar el mensaje. Inténtalo de nuevo.</div>";
+                        "<div class='alert alert-danger mt-3'>Error sending message. Please try again. / Error al enviar el mensaje. Inténtalo de nuevo.</div>";
                     console.error('FAILED...', error);
                 });
         });
