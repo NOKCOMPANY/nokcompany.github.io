@@ -147,7 +147,8 @@
             <i class="far fa-times-circle"></i>
         </a>
         <div class="container-fluid" >
-            <form id="myForm">
+            <h3>Contacto</h3>
+            <form id="myForm" style="margin-top: 20px; margin-bottom: 30px;">
                 <input type="text" name="nombre" id="nombre" placeholder="Nombre"><br>
                 <input type="email" name="correo" id="correo" placeholder="Correo"><br>
                 <button type="submit">Enviar</button>
@@ -180,7 +181,6 @@
 	<script src="assets/js/jquery-validate.bootstrap-tooltip.min.js"></script>
 
     <script src="assets/js/custom.js"></script>
-    <!-- EMAIL JS -->
     <script>
         // ... código del mapa de Leaflet ...
         var map = L.map('map').setView([-33.42492, -70.53926], 13);
@@ -189,8 +189,8 @@
     L.marker([-33.42492, -70.53926]).addTo(map)
     .bindPopup('Las Condes, RM Chile')
     .openPopup();
-        // Inicialización de EmailJS (después del mapa)
-          emailjs.init('QmbL_ojcNKBk5vkKAv'); // Reemplaza con tu Public KEY
+        // Inicialización de EmailJS 
+          emailjs.init('QmbL_ojcNKBk5vkKAv'); // Public KEY
     
         document.getElementById('myForm').addEventListener('submit', function(event) {
             event.preventDefault();
