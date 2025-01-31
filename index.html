@@ -11,6 +11,15 @@
     <link rel="stylesheet" href="assets/css/magnific-popup.css">
     <link rel="stylesheet" href="assets/css/style.css">
 	<title>Nok Services</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
+   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
+    <style>
+        #map { height: 200px; } 
+    </style>
 
 </head>
 <body class="has-loading-screen ts-theme-dark">
@@ -130,186 +139,22 @@
     <!--************ SIDE PANEL *************************************************************************************-->
     <!--*************************************************************************************************************-->
 
-    <!-- FUNCION DESACTIVADA MOMENTANEAMENTE <div class="ts-side-panel" data-bg-color="#001330">
+     <div class="ts-side-panel" data-bg-color="#001330">
         <a href="#" class="ts-close-side-panel">
             <i class="far fa-times-circle"></i>
         </a>
-        
-        <div class="container-fluid">
+        <div class="container-fluid" >
+            <form id="myForm">
+                <input type="text" name="nombre" id="nombre" placeholder="Nombre"><br>
+                <input type="email" name="correo" id="correo" placeholder="Correo"><br>
+                <button type="submit">Enviar</button>
+            </form>
             <section>
-                <div class="ts-title">
-                    <h2>About Us</h2>
-                </div>
-               
-                <p>
-                    Uis commodo arcu at egestas vehicula. Maecenas auctor sagittis nulla laoreet vestibulum.
-                    Vivamus congue diam blandit quam efficitur, vel mattis lacus feugiat. Integer tempus interdum felis,
-                    ut luctus nunc.
-                </p> -->
-            <!--
-                <div class="row">
-                    <div class="col-sm-6 col-xl-4">
-                        <div class="d-flex align-items-center my-3">
-                            <div class="ts-circle__md">
-                                <figure class="ts-background-image" data-bg-image="assets/img/person-01.jpg"></figure>
-                            </div>
-                            <div class="ml-3">
-                                <h3 class="mb-0">Jane Doe</h3>
-                                <h5 class="ts-opacity__50">Company CEO</h5>
-                            </div>
-                        </div>
-                        end d-flex
-                    </div>
-                    <!-end col-md-4->
-                    <div class="col-sm-6 col-xl-4">
-                        <div class="d-flex align-items-center my-3">
-                            <div class="ts-circle__md">
-                                <figure class="ts-background-image" data-bg-image="assets/img/person-02.jpg"></figure>
-                            </div>
-                            <div class="ml-3">
-                                <h3 class="mb-0">Peter Browns</h3>
-                                <h5 class="ts-opacity__50">Marketing Guru</h5>
-                            </div>
-                        </div>
-                        <!-end d-flex->
-                    </div>
-                    <!-end col-md-4->
-                    <div class="col-sm-6 col-xl-4">
-                        <div class="d-flex align-items-center my-3">
-                            <div class="ts-circle__md">
-                                <figure class="ts-background-image" data-bg-image="assets/img/person-04.jpg"></figure>
-                            </div>
-                            <div class="ml-3">
-                                <h3 class="mb-0">Susane Erwing</h3>
-                                <h5 class="ts-opacity__50">Support</h5>
-                            </div>
-                        </div>
-                        <!-end d-flex->
-                    </div>
-                    <!-end col-md-4->
-                </div>
-            desactivado integrantes de la compañia-->
-            </section>
-            <!--end section-->
-            <section>
-                <div class="ts-title">
-                    <h2>Features</h2>
-                </div>
-                <!--end ts-title-->
-                <div class="row">
-                    <div class="col-md-4">
-                        <img src="assets/img/icon-wallet.png" alt="" class="mw-100 mb-4">
-                        <h3>Easy Payments</h3>
-                        <p>
-                            Aenean ut orci mattis, rhoncus velit interdum, molestie mi
-                        </p>
-                    </div>
-                    <!--end col-md-4-->
-                    <div class="col-md-4">
-                        <img src="assets/img/icon-cloud.png" alt="" class="mw-100 mb-4">
-                        <h3>Secure Cloud</h3>
-                        <p>
-                            Uis commodo arcu at egestas vehicula. Maecenas auctor
-                        </p>
-                    </div>
-                    <!--end col-md-4-->
-                    <div class="col-md-4">
-                        <img src="assets/img/icon-laptop.png" alt="" class="mw-100 mb-4">
-                        <h3>Responsive</h3>
-                        <p>
-                            Integer tempus interdum felis, ut luctus nunc.
-                        </p>
-                    </div>
-                    <!--end col-md-4-->
-                </div>
-                <!--end row-->
-            </section>
-            <!--end section-->
-            <section>
-                <div class="ts-title">
-                    <h2>Our Mission</h2>
-                </div>
-                <!--end ts-title-->
-                <div class="row">
-                    <div class="col-md-12 col-xl-4">
-                        <p>
-                            Nam rhoncus elit ut nibh sagittis varius. Maecenas aliquam ex ut magna cursus pulvinar
-                        </p>
-                        <ul>
-                            <li>Nulla facilisi</li>
-                            <li>Donec fringilla dui</li>
-                            <li>Dapibus, ut placerat</li>
-                        </ul>
-                    </div>
-                    <!--end col-xl-4-->
-                    <div class="col-md-12 col-xl-8">
-                        <img src="assets/img/image-01.jpg" alt="" class="mw-100">
-                    </div>
-                    <!--end col-xl-8-->
-                </div>
-                <!--end row-->
-            </section>
-            <!--end section-->
-            <section>
-                <div class="ts-title">
-                    <h2>Contact</h2>
-                </div>
-                <!--end ts-tile-->
-                <h3>Map</h3>
-                <div class="map ts-height__200px mb-5" id="map"></div>
-                <!--end map-->
-                <div class="row">
-                    <div class="col-xl-4">
-                        <h3>Address</h3>
-                        <address>
-                            4758 Nancy Street
-                            <br>
-                            +1 919-571-2528
-                            <br>
-                            <a href="#">hello@example.com</a>
-                        </address>
-                    </div>
-                    <!--end col-xl-4-->
-                    <div class="col-xl-8">
-                        <h3>Contact Form</h3>
-                        <form id="form-contact" class="ts-form ts-form-email ts-inputs__transparent" data-php-path="assets/php/email.php">
-                            <div class="row">
-                                <div class="col-md-6 col-sm-6">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="form-contact-name" name="name" placeholder="Your Name" required>
-                                    </div>
-                                    <!--end form-group -->
-                                </div>
-                                <!--end col-md-6 col-sm-6 -->
-                                <div class="col-md-6 col-sm-6">
-                                    <div class="form-group">
-                                        <input type="email" class="form-control" id="form-contact-email" name="email" placeholder="Your Email" required>
-                                    </div>
-                                    <!--end form-group -->
-                                </div>
-                                <!--end col-md-6 col-sm-6 -->
-                            </div>
-                            <!--end row -->
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <textarea class="form-control" id="form-contact-message" rows="6" name="message" placeholder="Your Message" required></textarea>
-                                    </div>
-                                    <!--end form-group -->
-                                </div>
-                                <!--end col-md-12 -->
-                            </div>
-                            <!--end row -->
-                            <div class="form-group clearfix">
-                                <button type="submit" class="btn float-right btn-outline-primary" id="form-contact-submit">Send a Message</button>
-                            </div>
-                            <!--end form-group -->
-                            <div class="form-contact-status"></div>
-                        </form>
-                        <!--end form-contact -->
-                    </div>
-                    <!--end col-xl-8-->
-                </div>
+                <h3>Ubicación</h3>
+                <div class="map ts-height__200px mb-5" id="map"></div> 
+
+         </div>
+     </div>
                 <!--end row-->
             </section>
             <!--end section-->
@@ -333,18 +178,40 @@
 	<script src="assets/js/jquery-validate.bootstrap-tooltip.min.js"></script>
 
     <script src="assets/js/custom.js"></script>
+    <!-- EMAIL JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script>
+    (function(){
+        emailjs.init({
+  publicKey: 'QmbL_ojcNKBk5vkKA',
+});// Reemplaza con tu User ID de EmailJS
+    })();
 
-    <!--Google map-->
+    document.getElementById('myForm').addEventListener('submit', function(event) {
+        event.preventDefault();
 
-    <script>
-        var latitude = 34.038405;
-        var longitude = -117.946944;
-        var markerImage = "assets/img/map-marker.png";
-        var mapElement = "map";
-        //var mapStyle = [{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi","elementType":"labels.text","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#dbdbdb"},{"visibility":"on"}]}];
-        var mapStyle = [{"featureType":"all","elementType":"labels.text.fill","stylers":[{"saturation":36},{"color":"#000000"},{"lightness":40}]},{"featureType":"all","elementType":"labels.text.stroke","stylers":[{"visibility":"on"},{"color":"#000000"},{"lightness":16}]},{"featureType":"all","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"administrative","elementType":"geometry.fill","stylers":[{"color":"#000000"},{"lightness":20}]},{"featureType":"administrative","elementType":"geometry.stroke","stylers":[{"color":"#000000"},{"lightness":17},{"weight":1.2}]},{"featureType":"landscape","elementType":"geometry","stylers":[{"color":"#000000"},{"lightness":20}]},{"featureType":"poi","elementType":"geometry","stylers":[{"color":"#000000"},{"lightness":21}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#000000"},{"lightness":17}]},{"featureType":"road.highway","elementType":"geometry.stroke","stylers":[{"color":"#000000"},{"lightness":29},{"weight":0.2}]},{"featureType":"road.arterial","elementType":"geometry","stylers":[{"color":"#000000"},{"lightness":18}]},{"featureType":"road.local","elementType":"geometry","stylers":[{"color":"#000000"},{"lightness":16}]},{"featureType":"transit","elementType":"geometry","stylers":[{"color":"#000000"},{"lightness":19}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#000000"},{"lightness":17}]}]
-        google.maps.event.addDomListener(window, 'load', simpleMap(latitude, longitude, markerImage, mapStyle, mapElement));
+        emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', this) // Reemplaza con tus IDs
+            .then(function() {
+                console.log('Mensaje enviado!');
+                // Puedes mostrar un mensaje al usuario
+            }, function(error) {
+                console.log('Error:', error);
+            });
+    });
+</script>
+    <!--Map Script-->
 
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="..." crossorigin=""></script>
+    <script> // El script debe ir al FINAL del body
+        var map = L.map('map').setView([-33.42492, -70.53926], 13);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        L.marker([-33.42492, -70.53926]).addTo(map)
+            .bindPopup('Las Condes, RM Chile')
+            .openPopup();
     </script>
 
 </body>
