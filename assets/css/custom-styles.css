@@ -1,0 +1,46 @@
+/* ...existing code... */
+
+/* Navigation Menu Enhancements */
+.nav-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px; /* espacios entre elementos */
+}
+
+.nav-container a.nav-link {
+  display: inline-block;
+  white-space: nowrap; /* evita que se dividan palabras */
+  margin: 0 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  /* Efectos existentes */
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 25px;
+  color: white;
+  text-decoration: none;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.nav-container a.nav-link:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+}
+
+.nav-container a.nav-link.active,
+.nav-container a.nav-link.active:hover {
+  background: rgba(255, 255, 255, 0.5);
+  font-weight: 600;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .nav-container a.nav-link {
+    margin: 5px 10px;
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+}
+
+/* ...existing code... */

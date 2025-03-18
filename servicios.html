@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="assets/font-awesome/css/fontawesome-all.min.css">
     <link rel="stylesheet" href="assets/css/magnific-popup.css">
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/custom-styles.css">
     <title>Servicios - Nok Services</title>
 
     <!-- Meta tags de seguridad -->
@@ -29,92 +30,56 @@
             <!-- Navigation -->
             <header id="header">
                 <nav class="navbar navbar-dark ts-separate-bg-element">
-                    <a class="navbar-brand" href="index.html" style="display: flex; align-items: center;">
-                        <div style="display: flex; align-items: center; gap: 10px;">
-                            <img src="https://flagcdn.com/w20/cl.png" alt="Bandera de Chile" style="width: 20px; height: auto;">
+                    <!-- Removed inline styling from navbar-brand -->
+                    <a class="navbar-brand" href="index.html">
+                        <div class="brand-container">
+                            <img src="https://flagcdn.com/w20/cl.png" alt="Bandera de Chile">
                             <img src="assets/img/logo.png" alt="">
                         </div>
                     </a>
                     <div class="navbar-nav ml-auto custom-nav">
-                        <div class="nav-container" style="
-                            display: flex;
-                            background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.1));
-                            border-radius: 30px;
-                            padding: 5px;
-                            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
-                            <a href="index.html" class="nav-link" style="
-                                color: white;
-                                text-decoration: none;
-                                padding: 10px 25px;
-                                border-radius: 25px;
-                                transition: all 0.4s ease;
-                                margin: 0 5px;
-                                font-weight: 500;">Start</a>
-                            <a href="servicios.html" class="nav-link active" style="
-                                color: white !important;
-                                text-decoration: none;
-                                padding: 10px 25px;
-                                border-radius: 25px;
-                                transition: all 0.4s ease;
-                                margin: 0 5px;
-                                font-weight: 500;
-                                background: linear-gradient(45deg, #7928CA, #FF0080);">Services</a>
+                        <!-- Removed inline styles from nav-container -->
+                        <div class="nav-container">
+                            <a href="index.html" class="nav-link">Start</a>
+                            <a href="servicios.html" class="nav-link active">Services</a>
                         </div>
                     </div>
                 </nav>
             </header>
+            <!--end Navigation-->
 
-            <!-- Main Content -->
+            <!-- Main Content with Services Grid -->
             <main id="main-content">
                 <div class="ts-content-wrapper">
                     <div class="row">
                         <div class="col-md-12">
-                            <h1>Nuestros Servicios</h1>
+                            <h1>Our Services</h1>
                             
                             <!-- Services Grid -->
                             <div class="row mt-5">
                                 <!-- Service Card 1 -->
                                 <div class="col-md-4 mb-4">
-                                    <div class="service-card" style="
-                                        background: rgba(255, 255, 255, 0.1);
-                                        border-radius: 12px;
-                                        padding: 25px;
-                                        backdrop-filter: blur(5px);
-                                        border: 1px solid rgba(255, 255, 255, 0.1);
-                                        transition: all 0.3s ease;">
-                                        <i class="fas fa-robot mb-4" style="font-size: 2.5em; color: white;"></i>
+                                    <div class="service-card" style="background: rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 20px; backdrop-filter: blur(5px); border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); transition: all 0.3s ease;">
+                                        <!-- Icon, title and description -->
+                                        <i class="fas fa-robot mb-4"></i>
                                         <h3>Machine Learning</h3>
-                                        <p>Soluciones de IA personalizadas para optimizar sus procesos empresariales.</p>
+                                        <p>Customized AI solutions to optimize your business processes.</p>
                                     </div>
                                 </div>
-
                                 <!-- Service Card 2 -->
                                 <div class="col-md-4 mb-4">
-                                    <div class="service-card" style="
-                                        background: rgba(255, 255, 255, 0.1);
-                                        border-radius: 12px;
-                                        padding: 25px;
-                                        backdrop-filter: blur(5px);
-                                        border: 1px solid rgba(255, 255, 255, 0.1);
-                                        transition: all 0.3s ease;">
-                                        <i class="fas fa-share-alt mb-4" style="font-size: 2.5em; color: white;"></i>
+                                    <div class="service-card" style="background: rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 20px; backdrop-filter: blur(5px); border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); transition: all 0.3s ease;">
+                                        <i class="fas fa-share-alt mb-4"></i>
                                         <h3>Social Media</h3>
-                                        <p>Estrategias de posicionamiento en redes sociales con análisis de datos.</p>
+                                        <p>Data-driven strategies for social media engagement and positioning.</p>
                                     </div>
                                 </div>
-
                                 <!-- Service Card 3 -->
                                 <div class="col-md-4 mb-4">
-                                    <div class="service-card" style="
-                                        background: rgba(255, 255, 255, 0.1);
-                                        border-radius: 12px;
-                                        padding: 25px;
-                                        backdrop-filter: blur(5px);
-                                        border: 1px solid rgba(255, 255, 255, 0.1);
-                                        transition: all 0.3s ease;">
-                                        <i class="fas fa-code mb-4" style="font-size: 2.5em; color: white;"></i>
-                                        <h3>Desarrollo Web</h3>
-                                        <p>Desarrollo de aplicaciones web modernas y responsivas.</p>
+                                    <div class="service-card" style="background: rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 20px; backdrop-filter: blur(5px); border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); transition: all 0.3s ease;">
+                                        <i class="fas fa-code mb-4"></i>
+                                        <h3>Web Development</h3>
+                                        <p>Modern, responsive web application development tailored to your needs.</p>
                                     </div>
                                 </div>
                             </div>
@@ -122,6 +87,7 @@
                     </div>
                 </div>
             </main>
+            <!--end Main Content-->
 
             <!-- Footer -->
             <footer id="footer">
@@ -135,8 +101,9 @@
                 </div>
             </footer>
         </div>
+        <!--end container-->
 
-        <!-- Background -->
+        <!-- Background remains unchanged -->
         <div class="ts-background ts-shapes-canvas position-fixed ts-separate-bg-element" data-bg-color="#26005F">
             <div class="ts-background-image ts-animate ts-scale" data-bg-image="assets/img/bg/14.png"></div>
             <div class="ts-background-image ts-animate ts-bounce" data-bg-image="assets/img/bg/13.png"></div>
@@ -144,7 +111,7 @@
         </div>
     </div>
 
-    <!-- Scripts -->
+    <!-- Scripts remain unchanged -->
     <script src="assets/js/jquery-3.3.1.min.js"></script>
     <script src="assets/js/popper.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
@@ -174,4 +141,4 @@
         });
     </script>
 </body>
-</html> 
+</html>
