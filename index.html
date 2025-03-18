@@ -87,6 +87,13 @@
                                     <div class="form-contact-status"></div>
                                     <button type="submit" class="btn btn-primary" style="background: rgba(255, 255, 255, 0.2); border: none; padding: 12px 30px; border-radius: 8px; color: white; font-weight: 500; transition: all 0.3s ease;">Send</button>
                                 </form>
+                                <!-- Fallback LinkedIn Profile Module -->
+                                <div class="linkedin-widget" style="margin-top: 20px; text-align: center; background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.3); border-radius: 8px; padding: 10px;">
+                                    <a href="https://www.linkedin.com/company/nokspa" target="_blank" style="text-decoration: none; color: white; display: block;">
+                                        <img src="assets/img/linkedin-placeholder.png" alt="LinkedIn Profile" style="max-width: 100%; border-radius: 8px;">
+                                        <p style="margin: 10px 0 0; font-size: 18px;">Visit our LinkedIn Profile</p>
+                                    </a>
+                                </div>
                             </div>
                             
                             <!-- Weather Widget Section DESACTIVADA POR RENOVACION
@@ -131,7 +138,7 @@
                             </div>
                             -->
                             <!-- Medium Article Section -->
-                            <div class="medium-article-container" style="margin-bottom: 40px;">
+                            <div class="medium-article-container" style="margin-top: 40px; margin-bottom: 40px;">
                                 <h3>Latest Article</h3>
                                 <a href="https://medium.com/@N0rt1z/el-impacto-de-los-bots-en-las-redes-sociales-70932266dc9a?source=friends_link&sk=9c63f6e107b80053f97cab4db21db260" 
                                    target="_blank" 
@@ -262,6 +269,23 @@
      
     </div> -->
     <!--end ts-side-panel Desactivado-->
+
+    <!-- New Modal for LinkedIn Profile Preview -->
+    <div class="modal fade" id="linkedinModal" tabindex="-1" role="dialog" aria-labelledby="linkedinModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content" style="background: rgba(0, 0, 0, 0.8); border: none;">
+          <div class="modal-header" style="border: none;">
+            <h5 class="modal-title" id="linkedinModalLabel" style="color: white;">LinkedIn Profile Preview</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: white;">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" style="padding: 0;">
+            <iframe src="https://www.linkedin.com/company/nokspa" style="width: 100%; height: 500px; border: none;"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!--*************************************************************************************************************-->
     <!--************ JS SCRIPTS *************************************************************************************-->
