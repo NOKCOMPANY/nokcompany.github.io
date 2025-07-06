@@ -52,3 +52,88 @@
 }
 
 /* ...existing code... */
+
+/* Product Page Styles */
+.product-description h2 {
+    font-weight: 600;
+    color: #fff;
+}
+
+.product-description .lead {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+}
+
+.product-features {
+    margin-top: 1.5rem;
+    padding-left: 0;
+}
+
+.product-features li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.product-features i {
+    color: #a882ff; /* A nice purple accent */
+    font-size: 1.2rem;
+    margin-right: 15px;
+    width: 25px;
+    text-align: center;
+}
+
+.product-purchase-card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 30px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    transition: all 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.product-purchase-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+}
+
+.product-image-container {
+    margin-bottom: 20px;
+}
+
+.product-icon {
+    font-size: 6rem;
+    color: #fff;
+    text-shadow: 0 0 25px rgba(168, 130, 255, 0.7);
+    animation: float-robot 4s ease-in-out infinite;
+}
+
+@keyframes float-robot {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
+    100% { transform: translateY(0px); }
+}
+
+.btn-purchase {
+    background: linear-gradient(45deg, #8e44ad, #3498db);
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn-purchase:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px
