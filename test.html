@@ -11,6 +11,10 @@
   <button onclick="runCommand('mkdir nueva-carpeta')">Crear Carpeta</button>
   <button onclick="runCommand('date')">Ver Fecha</button>
 
+  <h3>Comando personalizado:</h3>
+  <input type="text" id="customCommand" placeholder="Escribe un comando...">
+  <button onclick="runCustomCommand()">Ejecutar</button>
+
   <h3>Salida:</h3>
   <pre id="output">Esperando comando...</pre>
 
@@ -26,6 +30,15 @@
       .catch(err => {
         document.getElementById("output").innerText = "Error: " + err;
       });
+    }
+
+    function runCustomCommand() {
+      const command = document.getElementById("customCommand").value;
+      if (command.trim() !== "") {
+        runCommand(command);
+      } else {
+        alert("Por favor, escribe un comando.");
+      }
     }
   </script>
 </body>
