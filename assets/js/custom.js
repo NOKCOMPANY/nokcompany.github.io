@@ -343,47 +343,6 @@ $(document).ready(function($) {
         $(this).validate();
     });
 
-    // Form validation and submission for EmailJS – with basic input sanitization
-    (function() {
-        function sanitizeInput(input) {
-            return input.replace(/[<>]/g, '');
-        }
-        let submitAttempts = 0;
-        const MAX_ATTEMPTS = 5;
-        const COOLDOWN_TIME = 300000;
-        
-        document.getElementById('form-contact').addEventListener('submit', function(e) {
-            e.preventDefault();
-            if (submitAttempts >= MAX_ATTEMPTS) {
-                document.querySelector('.form-contact-status').innerHTML = "<div class='alert alert-warning mt-3'>Demasiados intentos. Por favor, espere 5 minutos.</div>";
-                return;
-            }
-            const nombre = sanitizeInput(document.getElementById('nombre').value.trim());
-            const correo = sanitizeInput(document.getElementById('correo').value.trim());
-            const mensaje = sanitizeInput(document.getElementById('mensaje').value.trim());
-            if (!nombre || !correo || !mensaje || nombre.length > 100 || correo.length > 100 || mensaje.length > 1000) {
-                document.querySelector('.form-contact-status').innerHTML = "<div class='alert alert-danger mt-3'>Por favor, verifique los campos del formulario.</div>";
-                return;
-            }
-            const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-            if (!emailRegex.test(correo)) {
-                document.querySelector('.form-contact-status').innerHTML = "<div class='alert alert-danger mt-3'>Por favor, ingrese un correo electrónico válido.</div>";
-                return;
-            }
-            submitAttempts++;
-            emailjs.sendForm('NOKCOMPANY', 'template_jbnt66h', this, '4yv6lNv3D75wM1BVV')
-                .then(function(response) {
-                    document.querySelector('.form-contact-status').innerHTML = "<div class='alert alert-success mt-3'>¡Mensaje enviado con éxito!</div>";
-                    e.target.reset();
-                    setTimeout(() => { submitAttempts = Math.max(0, submitAttempts - 1); }, COOLDOWN_TIME);
-                })
-                .catch(function(error) {
-                    console.error('Error:', error);
-                    document.querySelector('.form-contact-status').innerHTML = "<div class='alert alert-danger mt-3'>Error al enviar el mensaje. Inténtalo de nuevo.</div>";
-                });
-        });
-    })();
-
     // Handle window resize events
     $(window).on("resize", function(){
         clearTimeout(resizeId);
