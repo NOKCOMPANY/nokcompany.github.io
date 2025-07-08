@@ -108,13 +108,17 @@
 
 .product-image-container {
     margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 160px; /* Asegura espacio para la imagen y su animación */
 }
 
-.product-icon {
-    font-size: 6rem;
-    color: #fff;
-    text-shadow: 0 0 25px rgba(168, 130, 255, 0.7);
+.product-logo-img {
+    max-width: 120px;
+    height: auto;
     animation: float-robot 4s ease-in-out infinite;
+    filter: drop-shadow(0 0 15px rgba(168, 130, 255, 0.6));
 }
 
 @keyframes float-robot {
