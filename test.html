@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Control de Terminal</title>
+</head>
+<body>
+  <h1>Controlar la Terminal Local</h1>
+
+  <button onclick="runCommand('ls')">Listar archivos</button>
+  <button onclick="runCommand('mkdir nueva-carpeta')">Crear Carpeta</button>
+  <button onclick="runCommand('date')">Ver Fecha</button>
+
+  <h3>Salida:</h3>
+  <pre id="output">Esperando comando...</pre>
+
+  <script>
+    function runCommand(command) {
+      fetch("http://localhost:5000/run", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ command })
+      })
+      .then(res => res.text())
+      .then(text => document.getElementById("output").innerText = text)
+      .catch(err => {
+        document.getElementById("output").innerText = "Error: " + err;
+      });
+    }
+  </script>
+</body>
+</html>
