@@ -145,15 +145,18 @@
 
 /* Sticky Footer & Swup Fix */
 /* This ensures the main wrapper can use flexbox to position the footer */
+html, body {
+    height: 100%; /* Asegura que el body ocupe todo el alto */
+}
+
 .ts-page-wrapper {
     display: flex;
     flex-direction: column;
-    min-height: 100vh; /* Use viewport height to ensure it covers the full screen */
+    min-height: 100vh; /* Ocupa siempre al menos 100% del viewport */
 }
 
-/* This makes the main content area grow to fill available space, pushing the footer down */
 #swup {
-    flex: 1 0 auto;
+    flex: 1; /* Toma el espacio disponible para empujar el footer al fondo */
 }
 
 /* This ensures the footer does not shrink and stays at the bottom */
