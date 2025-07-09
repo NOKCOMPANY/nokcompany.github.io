@@ -2,67 +2,266 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Control de Terminal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="NokServices">
+    <link rel="icon" type="image/png" href="assets/img/logo.png">
+    <link rel="shortcut icon" type="image/png" href="assets/img/logo.png">
+    <link rel="apple-touch-icon" href="assets/img/logo.png">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:400,500,600">
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="assets/font-awesome/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="assets/css/magnific-popup.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/custom-styles.css">
+    <title>Control de Terminal</title>
     <style>
       body {
-          background: linear-gradient(135deg, #2c3e50, #3498db);
-          color: #333;
-          font-family: 'Poppins', sans-serif;
+          background: radial-gradient(ellipse at center, #4a2a6c 0%, #111 75%);
+          color: #e6e6e6;
+          font-family: 'Poppins', 'Fira Mono', monospace, sans-serif;
+          min-height: 100vh;
+          position: relative;
+          overflow-x: hidden;
+      }
+      .background-artistic {
+          position: fixed;
+          top: 0; left: 0; width: 100vw; height: 100vh;
+          z-index: 0;
+          background: #111 url('assets/img/JULY_converted.jpg') no-repeat center center;
+          background-size: cover;
+          opacity: 0.25;
+          pointer-events: none;
+      }
+      .container {
+          position: relative;
+          z-index: 2;
       }
       .login-container {
           max-width: 400px;
           margin: 100px auto;
-          padding: 30px;
-          background: #fff;
-          border-radius: 8px;
-          box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+          padding: 32px 32px 28px 32px;
+          background: #ffffff2d;
+          border-radius: 10px;
+          box-shadow: 0 8px 32px rgba(0,0,0,0.18);
           transition: transform 0.3s ease;
       }
       .login-container:hover { transform: translateY(-5px); }
-      h1 { font-size: 2rem; font-weight: 600; }
+      .login-logo {
+          max-width: 150px;
+          height: 100px;
+      }
+      h1 { font-size: 2.1rem; font-weight: 600; letter-spacing: 1px; }
       .fade-out { opacity: 0; transition: opacity 0.5s ease; }
-      /* --- Estilos para simular terminal --- */
+
+      .btn-login {
+          background: rgba(138, 43, 226, 0.7); /* Morado azulado con transparencia */
+          border: 1px solid rgba(138, 43, 226, 0.9);
+          color: #fff;
+          font-weight: 600;
+          box-shadow: 0 0 10px rgba(138, 43, 226, 0.5), 0 0 20px rgba(138, 43, 226, 0.3);
+          transition: all 0.3s ease;
+      }
+
+      .btn-login:hover {
+          background: rgba(138, 43, 226, 0.9);
+          border-color: #8a2be2;
+          color: #fff;
+          box-shadow: 0 0 15px rgba(138, 43, 226, 0.8), 0 0 30px rgba(138, 43, 226, 0.5);
+          transform: scale(1.02);
+      }
+
+      /* Protected content styles */
+      #protectedContent {
+          background: rgba(24, 27, 36, 0.483);
+          border-radius: 14px;
+          box-shadow: 0 8px 40px 0 rgba(0,0,0,0.18), 0 1.5px 0 0 #232b36 inset;
+          padding: 48px 48px 36px 48px;
+          margin: 70px auto 50px auto;
+          max-width: 820px;
+          min-width: 340px;
+          border: 1.5px solid #232b36;
+          position: relative;
+      }
+      #protectedContent h5, #protectedContent label, #protectedContent ul, #protectedContent li, #protectedContent .terminal-output {
+          color: #e6e6e6;
+      }
+      #protectedContent h1, #protectedContent h3, #protectedContent h4, #protectedContent .section-title {
+          color: #b0b8c1;
+      }
+      #protectedContent .section-title {
+          font-size: 1.25rem;
+          font-weight: 600;
+          margin-bottom: 1.5rem;
+          letter-spacing: 0.5px;
+      }
+      /* Botones protegidos */
+      #protectedContent .btn-group-main {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 18px;
+          margin-bottom: 24px;
+      }
+      #protectedContent .btn-group-main .btn {
+          min-width: 160px;
+          font-weight: 500;
+          border-radius: 6px;
+          border: 1px solid #232b36;
+          background: #232b36;
+          color: #e6e6e6;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+          transition: background 0.18s, color 0.18s, border 0.18s;
+      }
+      #protectedContent .btn-group-main .btn:hover {
+          background: #181c22;
+          color: #fff;
+          border-color: #444c56;
+      }
+      #protectedContent .btn-group-custom {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 12px;
+          margin-bottom: 18px;
+      }
+      #protectedContent .btn-group-custom .btn {
+          min-width: 120px;
+          font-weight: 500;
+          border-radius: 6px;
+          border: 1px solid #232b36;
+          background: #232b36;
+          color: #b0b8c1;
+          transition: background 0.18s, color 0.18s, border 0.18s;
+      }
+      #protectedContent .btn-group-custom .btn:hover {
+          background: #22262f;
+          color: #fff;
+          border-color: #444c56;
+      }
+      #protectedContent .btn-outline-danger {
+          border-color: #c0392b;
+          color: #c0392b;
+          background: transparent;
+          font-weight: 500;
+          border-radius: 6px;
+          margin-left: 12px;
+      }
+      #protectedContent .btn-outline-danger:hover {
+          background: #c0392b;
+          color: #fff;
+      }
+      #protectedContent .btn-info {
+          background: #232b36;
+          color: #b0b8c1;
+          border: 1px solid #232b36;
+          font-weight: 500;
+          border-radius: 6px;
+      }
+      #protectedContent .btn-info:hover {
+          background: #181c22;
+          color: #fff;
+          border-color: #444c56;
+      }
+      #protectedContent .btn-success {
+          background: #232b36;
+          color: #b0ffb0;
+          border: 1px solid #232b36;
+          font-weight: 600;
+          border-radius: 6px;
+      }
+      #protectedContent .btn-success:hover {
+          background: #181c22;
+          color: #fff;
+          border-color: #444c56;
+      }
+      /* Terminal */
       .terminal {
-          background: #000;
-          color: #0f0;
-          font-family: monospace;
-          padding: 10px;
-          border-radius: 5px;
+          background: #181c22;
+          color: #b0ffb0;
+          font-family: 'Fira Mono', 'Consolas', monospace;
+          padding: 18px 18px 12px 18px;
+          border-radius: 8px;
+          border: 1.5px solid #232b36;
+          margin-bottom: 28px;
+          box-shadow: 0 2px 12px rgba(0,0,0,0.07);
       }
       .terminal-input-group {
           display: flex;
           align-items: center;
       }
       .terminal-prompt {
-          margin-right: 5px;
+          margin-right: 10px;
+          color: #b0b8c1;
+          font-weight: bold;
+          font-size: 1.15em;
+          letter-spacing: 1px;
       }
       .terminal-input {
           background: transparent;
           border: none;
           outline: none;
-          color: #0f0;
+          color: #b0b8c1;
           flex: 1;
+          font-size: 1.13em;
+          padding-left: 2px;
+      }
+      .terminal-input::placeholder {
+          color: #b0b8c1;
+          opacity: 0.5;
       }
       .terminal-output {
-          background: #000;
-          color: #0f0;
-          font-family: monospace;
-          padding: 10px;
-          border-radius: 5px;
-          min-height: 150px;
+          background: #10151c;
+          color: #b0b8c1;
+          font-family: 'Fira Mono', 'Consolas', monospace;
+          padding: 16px;
+          border-radius: 8px;
+          min-height: 160px;
+          border: 1px solid #232b36;
+          margin-top: 12px;
+          font-size: 1.04em;
+      }
+      /* Custom button input group */
+      #addCustomButtonContainer input {
+          background: #232b36;
+          color: #b0b8c1;
+          border: 1px solid #232b36;
+      }
+      #addCustomButtonContainer input::placeholder {
+          color: #b0b8c1;
+          opacity: 0.5;
+      }
+      #addCustomButtonContainer .btn-info {
+          margin-left: 8px;
+      }
+      /* Lista de características */
+      #protectedContent ul {
+          margin-top: 32px;
+          margin-bottom: 0;
+          padding-left: 0;
+      }
+      #protectedContent li {
+          font-size: 1.13em;
+          margin-bottom: 1.1em;
+          padding-left: 0.5em;
+          color: #b0b8c1;
+          list-style: disc inside;
+      }
+      #protectedContent .product-logo-img { display: none !important; }
+      #protectedContent .section {
+          margin-bottom: 2.5rem;
+      }
+      @media (max-width: 900px) {
+        #protectedContent { padding: 32px 10px 24px 10px; }
+      }
+      @media (max-width: 600px) {
+        #protectedContent { padding: 18px 2vw 12px 2vw; }
+        .login-container { margin: 40px auto; }
       }
     </style>
     <script>
-      // Actualizado para usar Localtunnel: reemplaza midominiopersonal por tu subdominio
       const serverURL = "https://midominiopersonal.loca.lt/run";
-
       function verifyCredentials() {
           const user = document.getElementById("username").value;
           const pass = document.getElementById("password").value;
           if (user === "admin" && pass === "123456") {
-              // Aplica efecto fade-out al login y muestra contenido protegido
               document.getElementById("loginForm").classList.add("fade-out");
               setTimeout(() => {
                   document.getElementById("loginForm").style.display = "none";
@@ -100,7 +299,6 @@
               alert("Por favor, escribe un comando.");
           }
       }
-      // Función para agregar botones personalizados dinámicamente
       function addCustomButton() {
           const label = document.getElementById("customButtonLabel").value;
           const command = document.getElementById("customButtonCommand").value;
@@ -109,29 +307,31 @@
               return;
           }
           const btn = document.createElement("button");
-          btn.className = "btn btn-secondary m-2";
+          btn.className = "btn btn-secondary";
+          btn.style.marginRight = "8px";
           btn.innerText = label;
           btn.onclick = function() { runCommand(command); };
           document.getElementById("customButtonContainer").appendChild(btn);
-          // Limpiar inputs
           document.getElementById("customButtonLabel").value = "";
           document.getElementById("customButtonCommand").value = "";
       }
-      // --- NUEVA FUNCIÓN PARA CERRAR SESIÓN ---
       function logoutSession() {
           document.getElementById("protectedContent").style.display = "none";
           document.getElementById("loginForm").style.display = "block";
           document.getElementById("loginForm").classList.remove("fade-out");
-          // Opcional: Limpiar botones personalizados
           document.getElementById("customButtonContainer").innerHTML = "";
       }
     </script>
 </head>
 <body>
+  <div class="background-artistic"></div>
   <div class="container">
-    <h1 class="text-center text-white my-5">Control de Terminal Seguro</h1>
-    <!-- Login Card -->
+    <h1 class="text-center text-white my-5">NOK SOFTWARE</h1>
+    <!-- Login Card with central logo -->
     <div id="loginForm" class="login-container">
+      <div class="text-center mb-3">
+         <img src="assets/img/logo.png" alt="Nok Logo" class="login-logo">
+      </div>
       <div class="form-group">
          <label for="username">Usuario:</label>
          <input type="text" class="form-control" id="username" value="admin">
@@ -140,44 +340,57 @@
          <label for="password">Contraseña:</label>
          <input type="password" class="form-control" id="password" value="123456">
       </div>
-      <button class="btn btn-primary btn-block mt-3" onclick="verifyCredentials()">Iniciar Sesión</button>
+      <button class="btn btn-block mt-3 btn-login" onclick="verifyCredentials()">Iniciar Sesión</button>
     </div>
 
     <!-- Protected Content Card -->
     <div id="protectedContent" style="display: none;">
-      <!-- Encabezado con botones y botón de Cerrar Sesión -->
-      <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
-         <div id="buttonContainer" class="d-flex flex-wrap gap-2">
-            <button class="btn btn-secondary" onclick="runCommand('ls')">Listar archivos</button>
-            <button class="btn btn-secondary" onclick="runCommand('mkdir nueva-carpeta')">Crear Carpeta</button>
-            <button class="btn btn-secondary" onclick="runCommand('date')">Ver Fecha</button>
-            <button class="btn btn-secondary" onclick="runCommand('pwd')">Directorio Actual</button>
-            <button class="btn btn-secondary" onclick="runCommand('whoami')">Usuario Actual</button>
-         </div>
-         <div>
-            <button class="btn btn-outline-danger" onclick="logoutSession()">Cerrar Sesión</button>
-         </div>
-      </div>
-      <!-- Área para botones personalizados -->
-      <div id="customButtonContainer" class="mb-3"></div>
-      <div class="input-group mb-3" id="addCustomButtonContainer">
-         <input type="text" id="customButtonLabel" class="form-control" placeholder="Etiqueta del botón">
-         <input type="text" id="customButtonCommand" class="form-control" placeholder="Comando">
-         <div class="input-group-append">
-            <button class="btn btn-info" onclick="addCustomButton()">Agregar Botón Personalizado</button>
-         </div>
-      </div>
-      <!-- Terminal -->
-      <div class="terminal mb-3">
-          <div class="terminal-input-group">
-              <span class="terminal-prompt">&gt;</span>
-              <input type="text" id="terminalInput" class="terminal-input" placeholder="Escribe tu comando aquí...">
-              <button class="btn btn-success ml-2" onclick="runCustomCommand()">Enter</button>
+      <div class="section mb-4">
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+          <div class="btn-group-main">
+            <button class="btn" onclick="runCommand('ls')">Listar archivos</button>
+            <button class="btn" onclick="runCommand('pwd')">Directorio Actual</button>
+            <button class="btn" onclick="runCommand('whoami')">Usuario Actual</button>
           </div>
+          <div>
+            <button class="btn btn-outline-danger" onclick="logoutSession()">Cerrar Sesión</button>
+          </div>
+        </div>
+        <div class="btn-group-main mb-3">
+          <button class="btn" onclick="runCommand('mkdir nueva-carpeta')">Crear Carpeta</button>
+          <button class="btn" onclick="runCommand('date')">Ver Fecha</button>
+        </div>
+        <div id="customButtonContainer" class="btn-group-custom mb-3"></div>
+        <div class="input-group mb-4" id="addCustomButtonContainer">
+           <input type="text" id="customButtonLabel" class="form-control" placeholder="Etiqueta del botón">
+           <input type="text" id="customButtonCommand" class="form-control" placeholder="Comando">
+           <div class="input-group-append">
+              <button class="btn btn-info" onclick="addCustomButton()">Agregar Botón Personalizado</button>
+           </div>
+        </div>
       </div>
-      <div class="mt-4">
-        <h5>Salida:</h5>
-        <pre id="output" class="terminal-output">Esperando comando...</pre>
+      <div class="section">
+        <div class="section-title">Terminal Interactiva</div>
+        <div class="terminal mb-3">
+            <div class="terminal-input-group">
+                <span class="terminal-prompt">&gt;</span>
+                <input type="text" id="terminalInput" class="terminal-input" placeholder="Escribe tu comando aquí...">
+                <button class="btn btn-success ml-2" onclick="runCustomCommand()">Enter</button>
+            </div>
+        </div>
+        <div>
+          <div class="section-title" style="font-size:1.1rem;">Salida</div>
+          <pre id="output" class="terminal-output">Esperando comando...</pre>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-title">Características del Sistema</div>
+        <ul class="list-unstyled">
+          <li><strong>Control de terminal:</strong> Controla la terminal unix sin limites.</li>
+          <li><strong>Autenticación:</strong> Acceso protegido mediante credenciales.</li>
+          <li><strong>Personalización:</strong> Comandos y botones adaptables a la sesión.</li>
+          <li><strong>Información:</strong> Visualización detallada del sistema y resultados.</li>
+        </ul>
       </div>
     </div>
   </div>
