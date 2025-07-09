@@ -5,7 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // Ejemplo: si ngrok te da "https://random-name-12345.ngrok-free.app",
         // la URL aquí debe ser "https://random-name-12345.ngrok-free.app/run"
         // ¡ASEGÚRATE DE QUE TERMINE EN /run!
-        const serverURL = "https://d2e9c18ff851.ngrok-free.app";
+        // CORREGIDO: Se añadió /run al final. ¡Recuerda cambiar esta URL por la que te dé ngrok!
+        const serverURL = "https://d2e9c18ff851.ngrok-free.app/run";
     
         // --- DOM Elements ---
         const loginForm = document.getElementById('loginForm');
@@ -42,7 +43,8 @@ document.addEventListener('DOMContentLoaded', () => {
         function getAuthHeader() {
             const user = usernameInput.value;
             const pass = passwordInput.value;
-            return "Basic " + btoa(`${user}:`);
+            // CORREGIDO: Se añadió la contraseña (pass) a la cabecera de autenticación.
+            return "Basic " + btoa(`${user}:${pass}`);
         }
     
         /**
@@ -54,6 +56,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 serverStatusText.innerText = "Error: Configura la URL del servidor en terminal.js";
                 serverStatusIndicator.classList.remove('online');
                 serverStatusIndicator.classList.add('offline');
+                return;
+            }
+            if (!serverURL.endsWith('/run')) {
+                console.error("La serverURL no termina en /run. La conexión fallará.");
+                serverStatusText.innerText = "Error: La URL en terminal.js está mal configurada.";
                 return;
             }
             try {
