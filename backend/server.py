@@ -1,6 +1,9 @@
 from flask import Flask, request, jsonify
 import subprocess
 from flask_cors import CORS
+import os
+import csv
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 CORS(app)
@@ -55,6 +58,52 @@ def run_command():
         return e.output.decode("utf-8"), 500
     except FileNotFoundError:
         return f"Comando no encontrado: {base_command}", 404
+
+@app.route("/files", methods=["GET"])
+def list_files():
+    if not authenticate(request):
+        return jsonify({"error": "Unauthorized"}), 401
+    
+    try:
+        current_dir = '.' 
+        files = [f for f in os.listdir(current_dir) if os.path.isfile(os.path.join(current_dir, f))]
+        return jsonify(files)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route("/read_csv", methods=["GET"])
+def read_csv_file():
+    if not authenticate(request):
+        return jsonify({"error": "Unauthorized"}), 401
+
+    filename = request.args.get('file')
+    if not filename:
+        return jsonify({"error": "Filename not provided"}), 400
+
+    # Seguridad: Sanitiza el nombre del archivo para prevenir Path Traversal
+    safe_filename = secure_filename(filename)
+    if safe_filename != filename:
+        return jsonify({"error": "Invalid filename"}), 400
+
+    # Seguridad: Asegura que el archivo esté en el directorio actual
+    current_dir = os.path.abspath('.')
+    file_path = os.path.abspath(os.path.join(current_dir, safe_filename))
+
+    if not file_path.startswith(current_dir):
+        return jsonify({"error": "Access denied"}), 403
+
+    if not os.path.exists(file_path):
+        return jsonify({"error": "File not found"}), 404
+
+    try:
+        rows = []
+        with open(file_path, mode='r', encoding='utf-8', errors='ignore') as csvfile:
+            reader = csv.DictReader(csvfile)
+            for row in reader:
+                rows.append(row)
+        return jsonify(rows)
+    except Exception as e:
+        return jsonify({"error": f"Error reading CSV file: {str(e)}"}), 500
 
 if __name__ == "__main__":
     # Esta línea te confirmará que el servidor se está iniciando.

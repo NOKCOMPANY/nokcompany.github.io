@@ -5,7 +5,8 @@
 // la URL aquí debe ser "https://random-name-12345.ngrok-free.app/run"
 // ¡ASEGÚRATE DE QUE TERMINE EN /run!
 const serverURL = "https://concise-friendly-sole.ngrok-free.app/run";
-
+const baseURL = serverURL.replace('/run', ''); // Base URL for other endpoints
+ 
 // --- DOM Elements ---
 const loginForm = document.getElementById('loginForm');
 const protectedContent = document.getElementById('protectedContent');
@@ -26,6 +27,11 @@ const customButtonCommandInput = document.getElementById('customButtonCommand');
 // --- Server Status Elements ---
 const serverStatusIndicator = document.getElementById('serverStatusIndicator');
 const serverStatusText = document.getElementById('serverStatusText');
+
+// --- File Manager Elements ---
+const loadFilesBtn = document.getElementById('loadFilesBtn');
+const fileListElement = document.getElementById('file-list');
+const csvViewerElement = document.getElementById('csv-viewer');
 
 // --- State ---
 let statusInterval = null;
@@ -111,6 +117,88 @@ async function runCommand(command) {
     }
 }
 
+/**
+ * Fetches the list of files from the server and displays them.
+ */
+async function loadFileList() {
+    fileListElement.innerHTML = '<li>Cargando...</li>';
+    csvViewerElement.innerHTML = ''; // Clear CSV viewer
+    try {
+        const response = await fetch(`${baseURL}/files`, {
+            method: "GET",
+            headers: {
+                "Authorization": getAuthHeader()
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error del servidor: ${response.status}`);
+        }
+
+        const files = await response.json();
+        fileListElement.innerHTML = ''; // Clear loading message
+
+        if (files.length === 0) {
+            fileListElement.innerHTML = '<li>No se encontraron archivos.</li>';
+            return;
+        }
+
+        files.forEach(file => {
+            const li = document.createElement('li');
+            li.style.padding = '8px';
+            li.style.borderBottom = '1px solid #232b36';
+            
+            const fileNameSpan = document.createElement('span');
+            fileNameSpan.textContent = file;
+            li.appendChild(fileNameSpan);
+
+            if (file.toLowerCase().endsWith('.csv')) {
+                const viewBtn = document.createElement('button');
+                viewBtn.textContent = 'Ver';
+                viewBtn.className = 'btn btn-sm btn-secondary ml-3';
+                viewBtn.addEventListener('click', () => viewCSV(file));
+                li.appendChild(viewBtn);
+            }
+            
+            fileListElement.appendChild(li);
+        });
+
+    } catch (err) {
+        fileListElement.innerHTML = `<li>Error al cargar archivos: ${err.message}</li>`;
+    }
+}
+
+/**
+ * Fetches and displays the content of a CSV file as a table.
+ * @param {string} filename - The name of the CSV file to view.
+ */
+async function viewCSV(filename) {
+    csvViewerElement.innerHTML = '<p>Cargando CSV...</p>';
+    try {
+        const response = await fetch(`${baseURL}/read_csv?file=${encodeURIComponent(filename)}`, {
+            method: "GET",
+            headers: { "Authorization": getAuthHeader() }
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || `Error del servidor: ${response.status}`);
+        }
+
+        const rows = await response.json();
+        if (rows.length === 0) {
+            csvViewerElement.innerHTML = '<p>El archivo CSV está vacío o no tiene un formato válido.</p>';
+            return;
+        }
+
+        const tableHtml = createTableFromJSON(rows);
+        csvViewerElement.innerHTML = tableHtml;
+
+    } catch (err) {
+        csvViewerElement.innerHTML = `<p style="color: #dc3545;">Error al ver el CSV: ${err.message}</p>`;
+    }
+}
+
 function handleLogin() {
     loginForm.classList.add("fade-out");
     setTimeout(() => {
@@ -128,6 +216,8 @@ function handleLogout() {
     customButtonContainer.innerHTML = "";
     outputElement.innerText = "Esperando comando...";
     terminalInput.value = "";
+    fileListElement.innerHTML = "";
+    csvViewerElement.innerHTML = "";
     clearInterval(statusInterval);
     serverStatusText.innerText = "Desconectado";
     serverStatusIndicator.classList.remove('online');
@@ -151,11 +241,43 @@ function addCustomButton() {
     customButtonCommandInput.value = "";
 }
 
+/**
+ * Creates an HTML table from a JSON array of objects.
+ * @param {Array<Object>} data - The array of data.
+ * @returns {string} The HTML table as a string.
+ */
+function createTableFromJSON(data) {
+    if (!data || data.length === 0) return '<p>No hay datos para mostrar.</p>';
+
+    const headers = Object.keys(data[0]);
+    let table = '<table class="table table-sm table-bordered table-striped table-dark" style="background-color: #181c22;">';
+    
+    // Table head
+    table += '<thead><tr>';
+    headers.forEach(header => {
+        table += `<th>${header}</th>`;
+    });
+    table += '</tr></thead>';
+
+    // Table body
+    table += '<tbody>';
+    data.forEach(row => {
+        table += '<tr>';
+        headers.forEach(header => {
+            table += `<td>${row[header]}</td>`;
+        });
+        table += '</tr>';
+    });
+    table += '</tbody></table>';
+    return table;
+}
+
 // --- Event Listeners ---
 loginButton?.addEventListener('click', handleLogin);
 logoutButton?.addEventListener('click', handleLogout);
 runCustomCommandButton?.addEventListener('click', () => runCommand(terminalInput.value));
 addCustomButtonBtn?.addEventListener('click', addCustomButton);
+loadFilesBtn?.addEventListener('click', loadFileList);
 
 terminalInput?.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
