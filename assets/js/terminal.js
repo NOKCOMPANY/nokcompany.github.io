@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     // --- Configuration ---
-    const serverURL = "https://nokcompany.cl.loca.lt/run";
+    const serverURL = "https://evil-sides-repair.loca.lt";
 
     // --- DOM Elements ---
     const loginForm = document.getElementById('loginForm');
