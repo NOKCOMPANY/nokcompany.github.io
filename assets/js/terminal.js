@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Reemplaza la siguiente URL con la que te entrega localtunnel en tu terminal.
     // Ejemplo: si localtunnel te da "https://lindo-gato-salta.loca.lt",
     // la URL aquí debe ser "https://lindo-gato-salta.loca.lt/run"
-    const serverURL = "https://beige-humans-lick.loca.lt";
+    const serverURL = "https://huge-baths-build.loca.lt";
     
     // --- DOM Elements ---
     const loginForm = document.getElementById('loginForm');
