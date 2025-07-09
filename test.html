@@ -3,74 +3,185 @@
 <head>
     <meta charset="UTF-8">
     <title>Control de Terminal</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="assets/font-awesome/css/fontawesome-all.min.css">
+    <style>
+      body {
+          background: linear-gradient(135deg, #2c3e50, #3498db);
+          color: #333;
+          font-family: 'Poppins', sans-serif;
+      }
+      .login-container {
+          max-width: 400px;
+          margin: 100px auto;
+          padding: 30px;
+          background: #fff;
+          border-radius: 8px;
+          box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+          transition: transform 0.3s ease;
+      }
+      .login-container:hover { transform: translateY(-5px); }
+      h1 { font-size: 2rem; font-weight: 600; }
+      .fade-out { opacity: 0; transition: opacity 0.5s ease; }
+      /* --- Estilos para simular terminal --- */
+      .terminal {
+          background: #000;
+          color: #0f0;
+          font-family: monospace;
+          padding: 10px;
+          border-radius: 5px;
+      }
+      .terminal-input-group {
+          display: flex;
+          align-items: center;
+      }
+      .terminal-prompt {
+          margin-right: 5px;
+      }
+      .terminal-input {
+          background: transparent;
+          border: none;
+          outline: none;
+          color: #0f0;
+          flex: 1;
+      }
+      .terminal-output {
+          background: #000;
+          color: #0f0;
+          font-family: monospace;
+          padding: 10px;
+          border-radius: 5px;
+          min-height: 150px;
+      }
+    </style>
     <script>
-        // Actualizado para usar Localtunnel: reemplaza midominiopersonal por el subdominio asignado.
-        const serverURL = "https://midominiopersonal.loca.lt/run";
+      // Actualizado para usar Localtunnel: reemplaza midominiopersonal por tu subdominio
+      const serverURL = "https://midominiopersonal.loca.lt/run";
 
-        function verifyCredentials() {
-            const user = document.getElementById("username").value;
-            const pass = document.getElementById("password").value;
-
-            if (user === "admin" && pass === "123456") {
-                document.getElementById("protectedContent").style.display = "block";
-                document.getElementById("loginForm").style.display = "none";
-            } else {
-                alert("Credenciales incorrectas. Inténtalo de nuevo.");
-            }
-        }
-
-        function getAuthHeader() {
-            const user = document.getElementById("username").value;
-            const pass = document.getElementById("password").value;
-            return "Basic " + btoa(user + ":" + pass);
-        }
-
-        function runCommand(command) {
-            fetch(serverURL, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": getAuthHeader()
-                },
-                body: JSON.stringify({ command })
-            })
-            .then(res => res.text())
-            .then(text => document.getElementById("output").innerText = text)
-            .catch(err => {
-                document.getElementById("output").innerText = "Error: " + err;
-            });
-        }
-
-        function runCustomCommand() {
-            const command = document.getElementById("customCommand").value;
-            if (command.trim() !== "") {
-                runCommand(command);
-            } else {
-                alert("Por favor, escribe un comando.");
-            }
-        }
+      function verifyCredentials() {
+          const user = document.getElementById("username").value;
+          const pass = document.getElementById("password").value;
+          if (user === "admin" && pass === "123456") {
+              // Aplica efecto fade-out al login y muestra contenido protegido
+              document.getElementById("loginForm").classList.add("fade-out");
+              setTimeout(() => {
+                  document.getElementById("loginForm").style.display = "none";
+                  document.getElementById("protectedContent").style.display = "block";
+              }, 500);
+          } else {
+              alert("Credenciales incorrectas. Inténtalo de nuevo.");
+          }
+      }
+      function getAuthHeader() {
+          const user = document.getElementById("username").value;
+          const pass = document.getElementById("password").value;
+          return "Basic " + btoa(user + ":" + pass);
+      }
+      function runCommand(command) {
+          fetch(serverURL, {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json",
+                  "Authorization": getAuthHeader()
+              },
+              body: JSON.stringify({ command })
+          })
+          .then(res => res.text())
+          .then(text => document.getElementById("output").innerText = text)
+          .catch(err => {
+              document.getElementById("output").innerText = "Error: " + err;
+          });
+      }
+      function runCustomCommand() {
+          const command = document.getElementById("terminalInput").value;
+          if (command.trim() !== "") {
+              runCommand(command);
+          } else {
+              alert("Por favor, escribe un comando.");
+          }
+      }
+      // Función para agregar botones personalizados dinámicamente
+      function addCustomButton() {
+          const label = document.getElementById("customButtonLabel").value;
+          const command = document.getElementById("customButtonCommand").value;
+          if (label.trim() === "" || command.trim() === "") {
+              alert("Por favor, ingresa la etiqueta y el comando.");
+              return;
+          }
+          const btn = document.createElement("button");
+          btn.className = "btn btn-secondary m-2";
+          btn.innerText = label;
+          btn.onclick = function() { runCommand(command); };
+          document.getElementById("customButtonContainer").appendChild(btn);
+          // Limpiar inputs
+          document.getElementById("customButtonLabel").value = "";
+          document.getElementById("customButtonCommand").value = "";
+      }
+      // --- NUEVA FUNCIÓN PARA CERRAR SESIÓN ---
+      function logoutSession() {
+          document.getElementById("protectedContent").style.display = "none";
+          document.getElementById("loginForm").style.display = "block";
+          document.getElementById("loginForm").classList.remove("fade-out");
+          // Opcional: Limpiar botones personalizados
+          document.getElementById("customButtonContainer").innerHTML = "";
+      }
     </script>
 </head>
 <body>
-    <h1>Controlar la Terminal de Forma Segura</h1>
-
-    <div id="loginForm">
-        <label>Usuario: <input type="text" id="username" value="admin"></label><br>
-        <label>Contraseña: <input type="password" id="password" value="123456"></label><br><br>
-        <button onclick="verifyCredentials()">Iniciar Sesión</button>
+  <div class="container">
+    <h1 class="text-center text-white my-5">Control de Terminal Seguro</h1>
+    <!-- Login Card -->
+    <div id="loginForm" class="login-container">
+      <div class="form-group">
+         <label for="username">Usuario:</label>
+         <input type="text" class="form-control" id="username" value="admin">
+      </div>
+      <div class="form-group">
+         <label for="password">Contraseña:</label>
+         <input type="password" class="form-control" id="password" value="123456">
+      </div>
+      <button class="btn btn-primary btn-block mt-3" onclick="verifyCredentials()">Iniciar Sesión</button>
     </div>
 
+    <!-- Protected Content Card -->
     <div id="protectedContent" style="display: none;">
-        <button onclick="runCommand('ls')">Listar archivos</button>
-        <button onclick="runCommand('mkdir nueva-carpeta')">Crear Carpeta</button>
-        <button onclick="runCommand('date')">Ver Fecha</button>
-
-        <h3>Comando personalizado:</h3>
-        <input type="text" id="customCommand" placeholder="Escribe un comando...">
-        <button onclick="runCustomCommand()">Ejecutar</button>
-
-        <h3>Salida:</h3>
-        <pre id="output">Esperando comando...</pre>
+      <!-- Encabezado con botones y botón de Cerrar Sesión -->
+      <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+         <div id="buttonContainer" class="d-flex flex-wrap gap-2">
+            <button class="btn btn-secondary" onclick="runCommand('ls')">Listar archivos</button>
+            <button class="btn btn-secondary" onclick="runCommand('mkdir nueva-carpeta')">Crear Carpeta</button>
+            <button class="btn btn-secondary" onclick="runCommand('date')">Ver Fecha</button>
+            <button class="btn btn-secondary" onclick="runCommand('pwd')">Directorio Actual</button>
+            <button class="btn btn-secondary" onclick="runCommand('whoami')">Usuario Actual</button>
+         </div>
+         <div>
+            <button class="btn btn-outline-danger" onclick="logoutSession()">Cerrar Sesión</button>
+         </div>
+      </div>
+      <!-- Área para botones personalizados -->
+      <div id="customButtonContainer" class="mb-3"></div>
+      <div class="input-group mb-3" id="addCustomButtonContainer">
+         <input type="text" id="customButtonLabel" class="form-control" placeholder="Etiqueta del botón">
+         <input type="text" id="customButtonCommand" class="form-control" placeholder="Comando">
+         <div class="input-group-append">
+            <button class="btn btn-info" onclick="addCustomButton()">Agregar Botón Personalizado</button>
+         </div>
+      </div>
+      <!-- Terminal -->
+      <div class="terminal mb-3">
+          <div class="terminal-input-group">
+              <span class="terminal-prompt">&gt;</span>
+              <input type="text" id="terminalInput" class="terminal-input" placeholder="Escribe tu comando aquí...">
+              <button class="btn btn-success ml-2" onclick="runCustomCommand()">Enter</button>
+          </div>
+      </div>
+      <div class="mt-4">
+        <h5>Salida:</h5>
+        <pre id="output" class="terminal-output">Esperando comando...</pre>
+      </div>
     </div>
+  </div>
+  <script src="assets/js/jquery-3.3.1.min.js"></script>
+  <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>
