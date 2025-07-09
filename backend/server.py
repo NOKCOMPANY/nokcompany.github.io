@@ -55,3 +55,9 @@ def run_command():
         return e.output.decode("utf-8"), 500
     except FileNotFoundError:
         return f"Comando no encontrado: {base_command}", 404
+
+if __name__ == "__main__":
+    # Esta línea te confirmará que el servidor se está iniciando.
+    print("🚀 Servidor Flask iniciándose en http://0.0.0.0:5000")
+    # Esta línea inicia el servidor y lo mantiene escuchando peticiones.
+    app.run(host="0.0.0.0", port=5000, debug=True)
