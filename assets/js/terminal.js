@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     // --- Configuration ---
-    const serverURL = "https://evil-sides-repair.loca.lt";
+    const serverURL = "https://nokcompany.cl.loca.lt/run";
 
     // --- DOM Elements ---
     const loginForm = document.getElementById('loginForm');
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
      */
     async function checkServerStatus() {
         try {
-            const response = await fetch(serverURL, {
+            const response = await fetch(serverURL, { // URL ahora es correcta
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         outputElement.innerText = "Executing...";
         try {
-            const response = await fetch(serverURL, {
+            const response = await fetch(serverURL, { // URL ahora es correcta
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
