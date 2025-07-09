@@ -296,10 +296,10 @@
 
     <!-- !!!!!!!Protected Content Card!!!!!! -->
     <div id="protectedContent" style="display: none;">
-        <div class="section mb-4">
+        <div class="section mb-4 text-center">
           <div>
-            <img src="assets/img/logo.png" alt="Nok Logo" class="padding-left" class="text-center">Administrador de Terminal      -      Conexion al Sistema < N O K > </N></h1>
-          <h3 class="text-center, padding-top= 1000px" style="color: #fff;">Bienvenido...</h3>
+            <img src="assets/img/logo.png" alt="Nok Logo" style="height: 50px; margin-bottom: 1rem;">
+            <h4 style="color: #fff;">Administrador del Sistema NOK</h4>
           </div>
         </div>
       <!-- =================== SERVER STATUS SECTION =================== -->
@@ -313,12 +313,15 @@
 
       <!-- =================== BUTTONS SECTION =================== -->
       <div class="section mb-4">
-        <div class="section-title" style="color: #232b36;">Terminal Interactiva</div>
+        <h5 class="section-title" style="color: #ffffff;">Terminal Interactiva</h5>
         <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
           <div class="btn-group-main">
             <button class="btn" data-command="ls">Listar archivos</button>
             <button class="btn" data-command="pwd">Directorio Actual</button>
             <button class="btn" data-command="whoami">Usuario Actual</button>
+          </div>
+          <div>
+            <button class="btn btn-outline-danger">Cerrar Sesión</button>
           </div>
         </div>
         <div class="btn-group-main mb-3">
@@ -343,21 +346,18 @@
             </div>
         </div>
         <div>
-          <div class="section-title" style= "color: #232b36;">Salida</div>
+          <h5 class="section-title" style="color: #ffffff;">Salida</h5>
           <pre id="output" class="terminal-output">Esperando comando...</pre>
         </div>
       </div>
       <!-- =================== FILE MANAGER SECTION =================== -->
-      <div>
-        <button class="btn btn-outline-danger">Cerrar Sesión</button>
-      </div>
-      <div class="section, padding-top= 1000px;">
-        <div class="section-title" style="color: #232b36;">Características del Sistema</div>
-        <ul style="color: #232b36;">
-          <li><strong style="color: #232b36;">Control de terminal:</strong> Controla la terminal unix sin limites.</li>
-          <li><strong style="color: #232b36;">Autenticación:</strong> Acceso protegido mediante credenciales.</li>
-          <li><strong style="color: #232b36;">Personalización:</strong> Comandos y botones adaptables a la sesión.</li>
-          <li><strong style="color: #232b36;">Información:</strong> Visualización detallada del sistema y resultados.</li>
+      <div class="section">
+        <h5 class="section-title" style="color: #ffffff;">Características del Sistema</h5>
+        <ul style="color: #e6e6e6;">
+          <li><strong>Control de terminal:</strong> Controla la terminal unix sin limites.</li>
+          <li><strong>Autenticación:</strong> Acceso protegido mediante credenciales.</li>
+          <li><strong>Personalización:</strong> Comandos y botones adaptables a la sesión.</li>
+          <li><strong>Información:</strong> Visualización detallada del sistema y resultados.</li>
         </ul>
         
       </div>

@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     // --- Configuration ---
-    const serverURL = "https://midominiopersonal.loca.lt/run";
+    const serverURL = "https://nokcompany.cl.loca.lt/run";
 
     // --- DOM Elements ---
     const loginForm = document.getElementById('loginForm');
