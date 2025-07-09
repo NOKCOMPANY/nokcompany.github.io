@@ -5,8 +5,8 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-# Lista blanca de comandos permitidos
-ALLOWED_COMMANDS = ['ls', 'mkdir', 'date', 'pwd', 'whoami']
+# Lista blanca de comandos permitidos. Usar un set es más eficiente para búsquedas.
+ALLOWED_COMMANDS = {'ls', 'mkdir', 'date', 'pwd', 'whoami'}
 
 # Diccionario de usuarios (en producción usar una base de datos y contraseñas cifradas)
 USERS = {
@@ -33,16 +33,25 @@ def run_command():
     if not command:
         return jsonify({"error": "No command provided"}), 400
 
-    # Solo permitir comandos que estén en la whitelist
-    if not any(command.strip().startswith(allowed) for allowed in ALLOWED_COMMANDS):
+    # Comando especial para verificar el estado del servidor de forma segura
+    if command.strip() == 'status':
+        return jsonify({"status": "active", "message": "Servidor online."})
+
+    # --- PARSEO SEGURO DE COMANDOS ---
+    # Dividir el comando y sus argumentos.
+    command_parts = command.strip().split()
+    base_command = command_parts[0]
+
+    # Validar que el comando base esté en la lista blanca.
+    if base_command not in ALLOWED_COMMANDS:
         return jsonify({"error": "Command not allowed"}), 403
 
     try:
-        result = subprocess.check_output(command, shell=True, stderr=subprocess.STDOUT)
+        # Ejecutar el comando de forma segura, sin shell=True, pasando los argumentos como una lista.
+        # Esto previene la inyección de comandos (ej: "ls; rm -rf /").
+        result = subprocess.check_output(command_parts, stderr=subprocess.STDOUT)
         return result.decode("utf-8")
     except subprocess.CalledProcessError as e:
         return e.output.decode("utf-8"), 500
-
-if __name__ == "__main__":
-    print("Server is running on 0.0.0.0:5000")
-    app.run(host="0.0.0.0", port=5000)
+    except FileNotFoundError:
+        return f"Comando no encontrado: {base_command}", 404

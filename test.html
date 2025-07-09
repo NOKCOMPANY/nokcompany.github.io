@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="assets/css/magnific-popup.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/custom-styles.css">
-    <title>Control de Terminal</title>
+    <title>Acceso de administrador - NOK SOFTWARE</title>
     <style>
       body {
           background: radial-gradient(ellipse at center, #4a2a6c 0%, #111 75%);
@@ -72,7 +72,7 @@
 
       /* Protected content styles */
       #protectedContent {
-          background: rgba(24, 27, 36, 0.483);
+          background: rgba(255, 255, 255, 0.429);
           border-radius: 14px;
           box-shadow: 0 8px 40px 0 rgba(0,0,0,0.18), 0 1.5px 0 0 #232b36 inset;
           padding: 48px 48px 36px 48px;
@@ -104,11 +104,11 @@
       #protectedContent .btn-group-main .btn {
           min-width: 160px;
           font-weight: 500;
-          border-radius: 6px;
+          border-radius: 3px;
           border: 1px solid #232b36;
-          background: #232b36;
+          background: #8c00ff2e;
           color: #e6e6e6;
-          box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+          box-shadow: 0 1px 1px rgba(0,0,0,0.08);
           transition: background 0.18s, color 0.18s, border 0.18s;
       }
       #protectedContent .btn-group-main .btn:hover {
@@ -248,6 +248,22 @@
       #protectedContent .section {
           margin-bottom: 2.5rem;
       }
+      .status-indicator {
+          height: 12px;
+          width: 12px;
+          border-radius: 50%;
+          display: inline-block;
+          margin-right: 8px;
+          transition: background-color 0.5s ease;
+      }
+      .status-indicator.online {
+          background-color: #28a745; /* Verde */
+          box-shadow: 0 0 8px #28a745;
+      }
+      .status-indicator.offline {
+          background-color: #dc3545; /* Rojo */
+          box-shadow: 0 0 8px #dc3545;
+      }
       @media (max-width: 900px) {
         #protectedContent { padding: 32px 10px 24px 10px; }
       }
@@ -256,77 +272,12 @@
         .login-container { margin: 40px auto; }
       }
     </style>
-    <script>
-      const serverURL = "https://midominiopersonal.loca.lt/run";
-      function verifyCredentials() {
-          const user = document.getElementById("username").value;
-          const pass = document.getElementById("password").value;
-          if (user === "admin" && pass === "123456") {
-              document.getElementById("loginForm").classList.add("fade-out");
-              setTimeout(() => {
-                  document.getElementById("loginForm").style.display = "none";
-                  document.getElementById("protectedContent").style.display = "block";
-              }, 500);
-          } else {
-              alert("Credenciales incorrectas. Inténtalo de nuevo.");
-          }
-      }
-      function getAuthHeader() {
-          const user = document.getElementById("username").value;
-          const pass = document.getElementById("password").value;
-          return "Basic " + btoa(user + ":" + pass);
-      }
-      function runCommand(command) {
-          fetch(serverURL, {
-              method: "POST",
-              headers: {
-                  "Content-Type": "application/json",
-                  "Authorization": getAuthHeader()
-              },
-              body: JSON.stringify({ command })
-          })
-          .then(res => res.text())
-          .then(text => document.getElementById("output").innerText = text)
-          .catch(err => {
-              document.getElementById("output").innerText = "Error: " + err;
-          });
-      }
-      function runCustomCommand() {
-          const command = document.getElementById("terminalInput").value;
-          if (command.trim() !== "") {
-              runCommand(command);
-          } else {
-              alert("Por favor, escribe un comando.");
-          }
-      }
-      function addCustomButton() {
-          const label = document.getElementById("customButtonLabel").value;
-          const command = document.getElementById("customButtonCommand").value;
-          if (label.trim() === "" || command.trim() === "") {
-              alert("Por favor, ingresa la etiqueta y el comando.");
-              return;
-          }
-          const btn = document.createElement("button");
-          btn.className = "btn btn-secondary";
-          btn.style.marginRight = "8px";
-          btn.innerText = label;
-          btn.onclick = function() { runCommand(command); };
-          document.getElementById("customButtonContainer").appendChild(btn);
-          document.getElementById("customButtonLabel").value = "";
-          document.getElementById("customButtonCommand").value = "";
-      }
-      function logoutSession() {
-          document.getElementById("protectedContent").style.display = "none";
-          document.getElementById("loginForm").style.display = "block";
-          document.getElementById("loginForm").classList.remove("fade-out");
-          document.getElementById("customButtonContainer").innerHTML = "";
-      }
-    </script>
 </head>
 <body>
   <div class="background-artistic"></div>
   <div class="container">
     <h1 class="text-center text-white my-5">NOK SOFTWARE</h1>
+    
     <!-- Login Card with central logo -->
     <div id="loginForm" class="login-container">
       <div class="text-center mb-3">
@@ -340,49 +291,67 @@
          <label for="password">Contraseña:</label>
          <input type="password" class="form-control" id="password" value="123456">
       </div>
-      <button class="btn btn-block mt-3 btn-login" onclick="verifyCredentials()">Iniciar Sesión</button>
+      <button class="btn btn-block mt-3 btn-login">Iniciar Sesión</button>
     </div>
 
-    <!-- Protected Content Card -->
+    <!-- !!!!!!!Protected Content Card!!!!!! -->
     <div id="protectedContent" style="display: none;">
+        <div class="section mb-4">
+          <div>
+            <img src="assets/img/logo.png" alt="Nok Logo" class="padding-left" class="text-center">Administrador de Terminal - Conexion al Sistema < N O K > </N></h1>
+          <h3 class="text-center" style="color: #fff;">Bienvenido...</h3>
+          <h4 class="text-center" style="color: #fff;">Control total de la terminal unix</h4>
+          </div>
+        </div>
+      <!-- =================== SERVER STATUS SECTION =================== -->
       <div class="section mb-4">
+        <h5 class="section-title" style="color: #ffffff;">Estado del Servidor</h5>
+        <div id="serverStatus" class="d-flex align-items-center">
+            <span id="serverStatusIndicator" class="status-indicator offline"></span>
+            <span id="serverStatusText">Verificando...</span>
+        </div>
+      </div>
+
+      <!-- =================== BUTTONS SECTION =================== -->
+      <div class="section mb-4">
+        <div class="section-title" style="color: #232b36;">Terminal Interactiva</div>
         <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
           <div class="btn-group-main">
-            <button class="btn" onclick="runCommand('ls')">Listar archivos</button>
-            <button class="btn" onclick="runCommand('pwd')">Directorio Actual</button>
-            <button class="btn" onclick="runCommand('whoami')">Usuario Actual</button>
+            <button class="btn" data-command="ls">Listar archivos</button>
+            <button class="btn" data-command="pwd">Directorio Actual</button>
+            <button class="btn" data-command="whoami">Usuario Actual</button>
           </div>
           <div>
-            <button class="btn btn-outline-danger" onclick="logoutSession()">Cerrar Sesión</button>
+            <button class="btn btn-outline-danger">Cerrar Sesión</button>
           </div>
         </div>
         <div class="btn-group-main mb-3">
-          <button class="btn" onclick="runCommand('mkdir nueva-carpeta')">Crear Carpeta</button>
-          <button class="btn" onclick="runCommand('date')">Ver Fecha</button>
+          <button class="btn" data-command="mkdir nueva-carpeta">Crear Carpeta</button>
+          <button class="btn" data-command="date">Ver Fecha</button>
         </div>
         <div id="customButtonContainer" class="btn-group-custom mb-3"></div>
         <div class="input-group mb-4" id="addCustomButtonContainer">
            <input type="text" id="customButtonLabel" class="form-control" placeholder="Etiqueta del botón">
            <input type="text" id="customButtonCommand" class="form-control" placeholder="Comando">
            <div class="input-group-append">
-              <button class="btn btn-info" onclick="addCustomButton()">Agregar Botón Personalizado</button>
+              <button class="btn btn-info">Agregar Botón Personalizado</button>
            </div>
         </div>
       </div>
       <div class="section">
-        <div class="section-title">Terminal Interactiva</div>
         <div class="terminal mb-3">
             <div class="terminal-input-group">
                 <span class="terminal-prompt">&gt;</span>
                 <input type="text" id="terminalInput" class="terminal-input" placeholder="Escribe tu comando aquí...">
-                <button class="btn btn-success ml-2" onclick="runCustomCommand()">Enter</button>
+                <button class="btn btn-success ml-2">Enter</button>
             </div>
         </div>
         <div>
-          <div class="section-title" style="font-size:1.1rem;">Salida</div>
+          <div class="section-title" style= "color: #232b36;">Salida</div>
           <pre id="output" class="terminal-output">Esperando comando...</pre>
         </div>
       </div>
+      <!-- =================== FILE MANAGER SECTION =================== -->
       <div class="section">
         <div class="section-title">Características del Sistema</div>
         <ul class="list-unstyled">
@@ -396,5 +365,6 @@
   </div>
   <script src="assets/js/jquery-3.3.1.min.js"></script>
   <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+  <script src="assets/js/terminal.js" defer></script>
 </body>
 </html>

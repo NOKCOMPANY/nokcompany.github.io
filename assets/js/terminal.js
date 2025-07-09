@@ -18,7 +18,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const addCustomButtonBtn = document.querySelector('#addCustomButtonContainer .btn-info');
     const customButtonLabelInput = document.getElementById('customButtonLabel');
     const customButtonCommandInput = document.getElementById('customButtonCommand');
-    
+
+    // --- Server Status Elements ---
+    const serverStatusIndicator = document.getElementById('serverStatusIndicator');
+    const serverStatusText = document.getElementById('serverStatusText');
+
+    // --- State ---
+    let statusInterval = null;
+
     const predefinedCommandButtons = document.querySelectorAll('#protectedContent .btn[data-command]');
 
     // --- Functions ---
@@ -31,6 +38,40 @@ document.addEventListener('DOMContentLoaded', () => {
         const user = usernameInput.value;
         const pass = passwordInput.value;
         return "Basic " + btoa(`${user}:${pass}`);
+    }
+
+    /**
+     * Checks the server status by sending a 'status' command.
+     * Updates the UI accordingly.
+     */
+    async function checkServerStatus() {
+        try {
+            const response = await fetch(serverURL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": getAuthHeader()
+                },
+                body: JSON.stringify({ command: "status" })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                serverStatusIndicator.classList.remove('offline');
+                serverStatusIndicator.classList.add('online');
+                serverStatusText.innerText = `Conectado - ${data.message || 'Servidor activo.'}`;
+            } else {
+                // Handle non-ok responses like 401 Unauthorized or 500 Server Error
+                serverStatusIndicator.classList.remove('online');
+                serverStatusIndicator.classList.add('offline');
+                serverStatusText.innerText = `Error de conexión (Código: ${response.status})`;
+            }
+        } catch (error) {
+            // Handle network errors (e.g., server is down)
+            serverStatusIndicator.classList.remove('online');
+            serverStatusIndicator.classList.add('offline');
+            serverStatusText.innerText = "Desconectado - No se pudo alcanzar el servidor.";
+        }
     }
 
     /**
@@ -83,6 +124,11 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
             loginForm.style.display = "none";
             protectedContent.style.display = "block";
+
+            // Start checking server status
+            checkServerStatus(); // Check immediately on login
+            statusInterval = setInterval(checkServerStatus, 3000); // Then check every 3 seconds
+
         }, 500);
     }
 
@@ -97,6 +143,12 @@ document.addEventListener('DOMContentLoaded', () => {
         customButtonContainer.innerHTML = "";
         outputElement.innerText = "Esperando comando...";
         terminalInput.value = "";
+
+        // Stop checking server status
+        clearInterval(statusInterval);
+        serverStatusText.innerText = "Desconectado";
+        serverStatusIndicator.classList.remove('online');
+        serverStatusIndicator.classList.add('offline');
     }
 
     /**
