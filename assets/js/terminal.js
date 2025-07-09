@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // la URL aquí debe ser "https://random-name-12345.ngrok-free.app/run"
         // ¡ASEGÚRATE DE QUE TERMINE EN /run!
         // CORREGIDO: Se añadió /run al final. ¡Recuerda cambiar esta URL por la que te dé ngrok!
-        const serverURL = "https://d2e9c18ff851.ngrok-free.app/run";
+        const serverURL = "https://ad4a1c76c2da.ngrok-free.app";
     
         // --- DOM Elements ---
         const loginForm = document.getElementById('loginForm');
