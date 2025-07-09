@@ -44,4 +44,5 @@ def run_command():
         return e.output.decode("utf-8"), 500
 
 if __name__ == "__main__":
+    print("Server is running on 0.0.0.0:5000")
     app.run(host="0.0.0.0", port=5000)

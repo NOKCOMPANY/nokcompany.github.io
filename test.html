@@ -1,59 +1,76 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Control de Terminal</title>
+    <meta charset="UTF-8">
+    <title>Control de Terminal</title>
+    <script>
+        // Actualizado para usar Localtunnel: reemplaza midominiopersonal por el subdominio asignado.
+        const serverURL = "https://midominiopersonal.loca.lt/run";
+
+        function verifyCredentials() {
+            const user = document.getElementById("username").value;
+            const pass = document.getElementById("password").value;
+
+            if (user === "admin" && pass === "123456") {
+                document.getElementById("protectedContent").style.display = "block";
+                document.getElementById("loginForm").style.display = "none";
+            } else {
+                alert("Credenciales incorrectas. Inténtalo de nuevo.");
+            }
+        }
+
+        function getAuthHeader() {
+            const user = document.getElementById("username").value;
+            const pass = document.getElementById("password").value;
+            return "Basic " + btoa(user + ":" + pass);
+        }
+
+        function runCommand(command) {
+            fetch(serverURL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": getAuthHeader()
+                },
+                body: JSON.stringify({ command })
+            })
+            .then(res => res.text())
+            .then(text => document.getElementById("output").innerText = text)
+            .catch(err => {
+                document.getElementById("output").innerText = "Error: " + err;
+            });
+        }
+
+        function runCustomCommand() {
+            const command = document.getElementById("customCommand").value;
+            if (command.trim() !== "") {
+                runCommand(command);
+            } else {
+                alert("Por favor, escribe un comando.");
+            }
+        }
+    </script>
 </head>
 <body>
-  <h1>Controlar la Terminal de Forma Segura</h1>
+    <h1>Controlar la Terminal de Forma Segura</h1>
 
-  <label>Usuario: <input type="text" id="username" value="admin"></label><br>
-  <label>Contraseña: <input type="password" id="password" value="123456"></label><br><br>
+    <div id="loginForm">
+        <label>Usuario: <input type="text" id="username" value="admin"></label><br>
+        <label>Contraseña: <input type="password" id="password" value="123456"></label><br><br>
+        <button onclick="verifyCredentials()">Iniciar Sesión</button>
+    </div>
 
-  <button onclick="runCommand('ls')">Listar archivos</button>
-  <button onclick="runCommand('mkdir nueva-carpeta')">Crear Carpeta</button>
-  <button onclick="runCommand('date')">Ver Fecha</button>
+    <div id="protectedContent" style="display: none;">
+        <button onclick="runCommand('ls')">Listar archivos</button>
+        <button onclick="runCommand('mkdir nueva-carpeta')">Crear Carpeta</button>
+        <button onclick="runCommand('date')">Ver Fecha</button>
 
-  <h3>Comando personalizado:</h3>
-  <input type="text" id="customCommand" placeholder="Escribe un comando...">
-  <button onclick="runCustomCommand()">Ejecutar</button>
+        <h3>Comando personalizado:</h3>
+        <input type="text" id="customCommand" placeholder="Escribe un comando...">
+        <button onclick="runCustomCommand()">Ejecutar</button>
 
-  <h3>Salida:</h3>
-  <pre id="output">Esperando comando...</pre>
-
-  <script>
-    const serverURL = "https://7f54de82bd40.ngrok-free.app"; // ← Reemplazar con tu URL pública
-
-    function getAuthHeader() {
-      const user = document.getElementById("username").value;
-      const pass = document.getElementById("password").value;
-      return "Basic " + btoa(user + ":" + pass);
-    }
-
-    function runCommand(command) {
-      fetch(serverURL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": getAuthHeader()
-        },
-        body: JSON.stringify({ command })
-      })
-      .then(res => res.text())
-      .then(text => document.getElementById("output").innerText = text)
-      .catch(err => {
-        document.getElementById("output").innerText = "Error: " + err;
-      });
-    }
-
-    function runCustomCommand() {
-      const command = document.getElementById("customCommand").value;
-      if (command.trim() !== "") {
-        runCommand(command);
-      } else {
-        alert("Por favor, escribe un comando.");
-      }
-    }
-  </script>
+        <h3>Salida:</h3>
+        <pre id="output">Esperando comando...</pre>
+    </div>
 </body>
 </html>
