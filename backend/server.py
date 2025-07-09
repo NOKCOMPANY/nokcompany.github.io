@@ -6,7 +6,7 @@ app = Flask(__name__)
 CORS(app)
 
 # Lista blanca de comandos permitidos. Usar un set es más eficiente para búsquedas.
-ALLOWED_COMMANDS = {'ls', 'mkdir', 'date', 'pwd', 'whoami'}
+ALLOWED_COMMANDS = {'ls', 'mkdir', 'date', 'pwd', 'whoami', 'status', 'cd'} 
 
 # Diccionario de usuarios (en producción usar una base de datos y contraseñas cifradas)
 USERS = {
@@ -44,7 +44,7 @@ def run_command():
 
     # Validar que el comando base esté en la lista blanca.
     if base_command not in ALLOWED_COMMANDS:
-        return jsonify({"error": "Command not allowed"}), 403
+        return jsonify({"error": "Comando no permitido! 403"}), 403
 
     try:
         # Ejecutar el comando de forma segura, sin shell=True, pasando los argumentos como una lista.
