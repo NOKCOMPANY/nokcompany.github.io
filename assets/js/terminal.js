@@ -117,7 +117,7 @@ function handleLogin() {
         loginForm.style.display = "none";
         protectedContent.style.display = "block";
         checkServerStatus();
-        statusInterval = setInterval(checkServerStatus, 3000);
+        statusInterval = setInterval(checkServerStatus, 10000);
     }, 500);
 }
 
