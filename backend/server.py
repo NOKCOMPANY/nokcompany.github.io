@@ -6,7 +6,7 @@ app = Flask(__name__)
 CORS(app)
 
 # Lista blanca de comandos permitidos. Usar un set es más eficiente para búsquedas.
-ALLOWED_COMMANDS = {'ls', 'mkdir', 'date', 'pwd', 'whoami'}
+#ALLOWED_COMMANDS = {'ls', 'mkdir', 'date', 'pwd', 'whoami'}
 
 # Diccionario de usuarios (en producción usar una base de datos y contraseñas cifradas)
 USERS = {
