@@ -132,10 +132,23 @@ async function loadFileList() {
         });
 
         if (!response.ok) {
+            const errorText = await response.text();
+            if (errorText.includes("Tunnel") && errorText.includes("not found")) {
+                throw new Error(`Túnel de ngrok no encontrado. Verifica que ngrok esté corriendo y que la URL en este archivo sea la correcta.`);
+            }
+            if (errorText.includes("502 Bad Gateway")) {
+                throw new Error(`502 Bad Gateway. El túnel de ngrok no puede conectar con tu servidor local. ¿Está 'server.py' corriendo?`);
+            }
             throw new Error(`Error del servidor: ${response.status}`);
         }
 
-        const files = await response.json();
+        // Check content type before parsing to avoid the "Unexpected token" error.
+        const contentType = response.headers.get("content-type");
+        if (!contentType || !contentType.includes("application/json")) {
+            throw new Error(`Respuesta inesperada del servidor. Se esperaba JSON pero se recibió '${contentType}'. Revisa la consola del backend.`);
+        }
+
+        const files = await response.json(); // This should now be safe
         fileListElement.innerHTML = ''; // Clear loading message
 
         if (files.length === 0) {
@@ -164,7 +177,12 @@ async function loadFileList() {
         });
 
     } catch (err) {
-        fileListElement.innerHTML = `<li>Error al cargar archivos: ${err.message}</li>`;
+        // Provide a more user-friendly message for the specific JSON parsing error
+        if (err instanceof SyntaxError) {
+            fileListElement.innerHTML = `<li style="color: #dc3545;">Error: El servidor no respondió con un formato JSON válido. Revisa la consola del backend (server.py) para ver si hay errores.</li>`;
+        } else {
+            fileListElement.innerHTML = `<li style="color: #dc3545;">Error al cargar archivos: ${err.message}</li>`;
+        }
     }
 }
 
@@ -181,7 +199,8 @@ async function viewCSV(filename) {
         });
 
         if (!response.ok) {
-            const errorData = await response.json();
+            // Try to parse JSON error, but have a fallback if the response is not JSON
+            const errorData = await response.json().catch(() => ({ error: `Error del servidor: ${response.status}` }));
             throw new Error(errorData.error || `Error del servidor: ${response.status}`);
         }
 
