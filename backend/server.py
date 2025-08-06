@@ -111,7 +111,9 @@ def read_csv_file():
         return jsonify({"error": f"Error reading CSV file: {str(e)}"}), 500
 
 if __name__ == "__main__":
-    # Esta línea te confirmará que el servidor se está iniciando.
+    # Inicia el servidor de desarrollo solo si se ejecuta directamente
+    # FLASK_ENV=development habilita el modo debug.
+    debug_mode = os.environ.get("FLASK_ENV") == "development"
     print("🚀 Servidor Flask iniciándose en http://0.0.0.0:80 (Requiere sudo para ejecutar)")
-    # Esta línea inicia el servidor y lo mantiene escuchando peticiones.
-    app.run(host="0.0.0.0", port=80, debug=True)
+    # No usar en producción; en su lugar usar un servidor WSGI como Gunicorn.
+    app.run(host="0.0.0.0", port=80, debug=debug_mode)
