@@ -5,9 +5,13 @@ import os
 import csv
 import shlex
 from werkzeug.utils import secure_filename
+import requests
 
 app = Flask(__name__)
 CORS(app)
+
+# Clave del servicio de correo almacenada como variable de entorno
+EMAILJS_PUBLIC_KEY = os.environ.get("EMAILJS_PUBLIC_KEY")
 
 # Lista blanca de comandos permitidos. Usar un set es más eficiente para búsquedas.
 ALLOWED_COMMANDS = {'ls', 'mkdir', 'date', 'pwd', 'whoami', 'status', 'cd'} 
@@ -109,6 +113,38 @@ def read_csv_file():
         return jsonify(rows)
     except Exception as e:
         return jsonify({"error": f"Error reading CSV file: {str(e)}"}), 500
+
+
+@app.route("/send-email", methods=["POST"])
+def send_email():
+    data = request.get_json()
+    nombre = data.get("nombre")
+    correo = data.get("correo")
+    mensaje = data.get("mensaje")
+
+    if not EMAILJS_PUBLIC_KEY:
+        return jsonify({"error": "Email service key not configured"}), 500
+
+    payload = {
+        "service_id": "NOKCOMPANY",
+        "template_id": "template_jbnt66h",
+        "user_id": EMAILJS_PUBLIC_KEY,
+        "template_params": {
+            "nombre": nombre,
+            "correo": correo,
+            "mensaje": mensaje,
+        },
+    }
+
+    try:
+        response = requests.post(
+            "https://api.emailjs.com/api/v1.0/email/send", json=payload
+        )
+        if response.status_code == 200:
+            return jsonify({"success": True})
+        return jsonify({"error": "Failed to send email"}), 500
+    except requests.RequestException as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
     # Esta línea te confirmará que el servidor se está iniciando.

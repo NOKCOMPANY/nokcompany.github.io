@@ -50,7 +50,7 @@ function initLeafletMap() {
 }
 
 /**
- * Inicializa la lógica del formulario de contacto de EmailJS.
+ * Inicializa la lógica del formulario de contacto enviando los datos al backend.
  */
 function initContactForm() {
     const contactForm = document.getElementById('form-contact');
@@ -94,8 +94,20 @@ function initContactForm() {
 
         submitAttempts++;
 
-        emailjs.sendForm('NOKCOMPANY', 'template_jbnt66h', this, '4yv6lNv3D75wM1BVV')
-            .then(function(response) {
+        fetch('/send-email', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ nombre, correo, mensaje })
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(() => {
                 document.querySelector('.form-contact-status').innerHTML =
                     "<div class='alert alert-success mt-3'>¡Mensaje enviado con éxito!</div>";
                 e.target.reset();
@@ -104,7 +116,7 @@ function initContactForm() {
                     submitAttempts = Math.max(0, submitAttempts - 1);
                 }, COOLDOWN_TIME);
             })
-            .catch(function(error) {
+            .catch(error => {
                 console.error('Error:', error);
                 document.querySelector('.form-contact-status').innerHTML =
                     "<div class='alert alert-danger mt-3'>Error al enviar el mensaje. Inténtalo de nuevo.</div>";
