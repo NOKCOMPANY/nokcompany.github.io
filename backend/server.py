@@ -1,16 +1,11 @@
 from flask import Flask, request, jsonify
-import subprocess
 from flask_cors import CORS
 import os
 import csv
-import shlex
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 CORS(app)
-
-# Lista blanca de comandos permitidos. Usar un set es más eficiente para búsquedas.
-ALLOWED_COMMANDS = {'ls', 'mkdir', 'date', 'pwd', 'whoami', 'status', 'cd'} 
 
 # Diccionario de usuarios (en producción usar una base de datos y contraseñas cifradas)
 USERS = {
@@ -26,43 +21,36 @@ def authenticate(request):
     password = auth.password
     return USERS.get(username) == password
 
+def get_system_status():
+    """Return basic information about server status."""
+    return {"status": "active", "message": "Servidor online."}
+
+
+ALLOWED_ACTIONS = {
+    "get_system_status": get_system_status,
+}
+
+
 @app.route("/run", methods=["POST"])
-def run_command():
+def run_action():
     if not authenticate(request):
         return jsonify({"error": "Unauthorized"}), 401
 
-    data = request.get_json()
-    command = data.get("command")
+    data = request.get_json() or {}
+    action = data.get("action")
 
-    if not command:
-        return jsonify({"error": "No command provided"}), 400
+    if not action:
+        return jsonify({"error": "No action provided"}), 400
 
-    # Comando especial para verificar el estado del servidor de forma segura
-    if command.strip() == 'status':
-        return jsonify({"status": "active", "message": "Servidor online."})
-
-    # --- PARSEO SEGURO DE COMANDOS ---
-    # Dividir el comando y sus argumentos utilizando shlex para respetar comillas
-    try:
-        command_parts = shlex.split(command)
-    except ValueError as e:
-        return jsonify({"error": f"Invalid command: {str(e)}"}), 400
-
-    base_command = command_parts[0]
-
-    # Validar que el comando base esté en la lista blanca.
-    if base_command not in ALLOWED_COMMANDS:
-        return jsonify({"error": "Comando no permitido! 403"}), 403
+    func = ALLOWED_ACTIONS.get(action)
+    if not func:
+        return jsonify({"error": "Action not allowed"}), 403
 
     try:
-        # Ejecutar el comando de forma segura, sin shell=True, pasando los argumentos como una lista.
-        # Esto previene la inyección de comandos (ej: "ls; rm -rf /").
-        result = subprocess.check_output(command_parts, stderr=subprocess.STDOUT)
-        return result.decode("utf-8")
-    except subprocess.CalledProcessError as e:
-        return e.output.decode("utf-8"), 500
-    except FileNotFoundError:
-        return f"Comando no encontrado: {base_command}", 404
+        result = func()
+        return jsonify(result)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 @app.route("/files", methods=["GET"])
 def list_files():
