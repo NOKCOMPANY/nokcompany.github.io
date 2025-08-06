@@ -3,6 +3,7 @@ import subprocess
 from flask_cors import CORS
 import os
 import csv
+import shlex
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
@@ -41,8 +42,12 @@ def run_command():
         return jsonify({"status": "active", "message": "Servidor online."})
 
     # --- PARSEO SEGURO DE COMANDOS ---
-    # Dividir el comando y sus argumentos.
-    command_parts = command.strip().split()
+    # Dividir el comando y sus argumentos utilizando shlex para respetar comillas
+    try:
+        command_parts = shlex.split(command)
+    except ValueError as e:
+        return jsonify({"error": f"Invalid command: {str(e)}"}), 400
+
     base_command = command_parts[0]
 
     # Validar que el comando base esté en la lista blanca.
