@@ -5,6 +5,7 @@ import os
 import csv
 import shlex
 from werkzeug.utils import secure_filename
+import bcrypt
 
 app = Flask(__name__)
 CORS(app)
@@ -12,11 +13,8 @@ CORS(app)
 # Lista blanca de comandos permitidos. Usar un set es más eficiente para búsquedas.
 ALLOWED_COMMANDS = {'ls', 'mkdir', 'date', 'pwd', 'whoami', 'status', 'cd'} 
 
-# Diccionario de usuarios (en producción usar una base de datos y contraseñas cifradas)
-USERS = {
-    "admin": "123456",  # cambiar por contraseña segura
-    "user1": "pass1"
-}
+# Las contraseñas se obtienen de variables de entorno como ADMIN_PASSWORD_HASH,
+# USER1_PASSWORD_HASH, etc. Cada valor debe ser un hash generado con bcrypt.
 
 def authenticate(request):
     auth = request.authorization
@@ -24,7 +22,18 @@ def authenticate(request):
         return False
     username = auth.username
     password = auth.password
-    return USERS.get(username) == password
+
+    # Obtener el hash almacenado en la variable de entorno correspondiente
+    env_var = f"{username.upper()}_PASSWORD_HASH"
+    stored_hash = os.environ.get(env_var)
+    if not stored_hash:
+        return False
+
+    try:
+        return bcrypt.checkpw(password.encode("utf-8"), stored_hash.encode("utf-8"))
+    except ValueError:
+        # El hash almacenado no es válido
+        return False
 
 @app.route("/run", methods=["POST"])
 def run_command():
