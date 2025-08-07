@@ -4,7 +4,11 @@
 const swup = new Swup({
     animateHistoryBrowsing: true,
     cache: true,
-    preload: true,
+    plugins: [
+        new SwupPreloadPlugin({
+            preloadHoveredLinks: true,
+        })
+    ]
 });
 
 // Variable para mantener la instancia del mapa y evitar reinicialización
