@@ -4,15 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="author" content="NokServices">
-    <link rel="icon" type="image/png" href="assets/img/logo.png">
-    <link rel="shortcut icon" type="image/png" href="assets/img/logo.png">
-    <link rel="apple-touch-icon" href="assets/img/logo.png">
+    <!-- Meta tags de seguridad -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' https: 'unsafe-inline' 'unsafe-eval'; style-src 'self' https: 'unsafe-inline';">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+
+    <link rel="icon" type="image/png" href="../assets/img/logo.png">
+    <link rel="shortcut icon" type="image/png" href="../assets/img/logo.png">
+    <link rel="apple-touch-icon" href="../assets/img/logo.png">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:400,500,600">
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="assets/font-awesome/css/fontawesome-all.min.css">
-    <link rel="stylesheet" href="assets/css/magnific-popup.css">
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/custom-styles.css">
+    <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="../assets/font-awesome/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="../assets/css/magnific-popup.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/custom-styles.css">
     <title>Acceso de administrador - NOK SOFTWARE</title>
     <style>
       body {
@@ -27,7 +33,7 @@
           position: fixed;
           top: 0; left: 0; width: 100vw; height: 100vh;
           z-index: 0;
-          background: #111 url('assets/img/JULY_converted.jpg') no-repeat center center;
+          background: #111 url('../assets/img/JULY_converted.jpg') no-repeat center center;
           background-size: cover;
           opacity: 0.25;
           pointer-events: none;
@@ -273,7 +279,8 @@
       }
     </style>
 </head>
-<body>
+<body class="has-loading-screen ts-theme-dark">
+  <div id="swup" class="transition-fade">
   <div class="background-artistic"></div>
   <div class="container">
     <h1 class="text-center text-white my-5">NOK SOFTWARE</h1>
@@ -281,7 +288,7 @@
     <!-- Login Card with central logo -->
     <div id="loginForm" class="login-container">
       <div class="text-center mb-3">
-         <img src="assets/img/logo.png" alt="Nok Logo" class="login-logo">
+         <img src="../assets/img/logo.png" alt="Nok Logo" class="login-logo">
       </div>
       <div class="form-group">
          <label for="username">Usuario:</label>
@@ -298,7 +305,7 @@
     <div id="protectedContent" style="display: none;">
         <div class="section mb-4 text-center">
           <div>
-            <img src="assets/img/logo.png" alt="Nok Logo" style="height: 50px; margin-bottom: 1rem;">
+            <img src="../assets/img/logo.png" alt="Nok Logo" style="height: 50px; margin-bottom: 1rem;">
             <h4 style="color: #fff;">Administrador del Sistema NOK</h4>
           </div>
         </div>
@@ -371,8 +378,12 @@
       </div>
     </div>
   </div>
-  <script src="assets/js/jquery-3.3.1.min.js"></script>
-  <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-  <script src="assets/js/terminal.js" defer></script>
+  </div>
+  <script src="../assets/js/jquery-3.3.1.min.js"></script>
+  <script src="../assets/bootstrap/js/bootstrap.min.js"></script>
+  <script src="https://unpkg.com/swup@4" defer></script>
+  <script src="https://unpkg.com/@swup/preload-plugin@3" defer></script>
+  <script src="../assets/js/terminal.js" defer></script>
+  <script src="../assets/js/main.js" defer></script>
 </body>
 </html>
