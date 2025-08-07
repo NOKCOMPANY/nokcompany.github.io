@@ -138,12 +138,24 @@ function runPageScripts() {
 // =================================================================
 // SWUP HOOKS - GESTIÓN DEL CICLO DE VIDA DE LA PÁGINA
 // =================================================================
+/**
+ * Elimina `index.html` de la URL actual para mantener rutas limpias.
+ */
+function cleanUrl() {
+    history.replaceState(null, '', location.pathname.replace(/index\.html$/, ''));
+}
 
 // Se ejecuta una vez cuando la página carga por primera vez
-document.addEventListener('DOMContentLoaded', runPageScripts);
+document.addEventListener('DOMContentLoaded', () => {
+    cleanUrl();
+    runPageScripts();
+});
 
 // Se ejecuta cada vez que Swup carga una nueva página
-swup.hooks.on('page:view', runPageScripts);
+swup.hooks.on('page:view', () => {
+    cleanUrl();
+    runPageScripts();
+});
 
 // Clases para las animaciones de Swup
 swup.hooks.on('visit:start', () => {
