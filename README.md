@@ -61,15 +61,7 @@ Somos **NOK SERVICES SPA**, un referente en desarrollo tecnológico para Chile y
 
 ¡Gracias por visitar este README! Estamos listos para ayudarte a alcanzar el próximo nivel digital.
 
----
-
-
-▗▖  ▗▖ ▗▄▖ ▗▖ ▗▖     ▗▄▄▖ ▗▄▖ ▗▖  ▗▖▗▄▄▖  ▗▄▖ ▗▖  ▗▖▗▖  ▗▖
-▐▛▚▖▐▌▐▌ ▐▌▐▌▗▞▘    ▐▌   ▐▌ ▐▌▐▛▚▞▜▌▐▌ ▐▌▐▌ ▐▌▐▛▚▖▐▌ ▝▚▞▘ 
-▐▌ ▝▜▌▐▌ ▐▌▐▛▚▖     ▐▌   ▐▌ ▐▌▐▌  ▐▌▐▛▀▘ ▐▛▀▜▌▐▌ ▝▜▌  ▐▌  
-▐▌  ▐▌▝▚▄▞▘▐▌ ▐▌    ▝▚▄▄▖▝▚▄▞▘▐▌  ▐▌▐▌   ▐▌ ▐▌▐▌  ▐▌  ▐▌  
-                                                          
-                                                          
+---                                                
                                                   
 ## Créditos
 
