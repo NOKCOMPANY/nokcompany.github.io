@@ -13,8 +13,6 @@
 [![Website](https://img.shields.io/badge/site-nokcompany.cl-blue)](https://nokcompany.cl)
 ![Status](https://img.shields.io/badge/status-online-succes)
 
-![Typing SVG](https://readme-typing-svg.demolab.com?lines=NOK+SERVICES+SPA;Soluciones+Digitales;Infraestructura+Web)
-
 Somos **NOK SERVICES SPA**, un referente en desarrollo tecnológico para Chile y el mundo, especializados en **machine learning**, **posicionamiento en redes sociales**, **inteligencia artificial** y procesos de ingeniería segura. Estamos basados en Las Condes, Santiago de Chile. 
 
 ---
@@ -58,6 +56,8 @@ Somos **NOK SERVICES SPA**, un referente en desarrollo tecnológico para Chile y
 - ¡Y muchas sorpresas que reforzarán tu presencia online!
 
 ---
+
+![Typing SVG](https://readme-typing-svg.demolab.com?lines=NOK+SERVICES+SPA;Soluciones+Digitales;Infraestructura+Web)
 
 ¡Gracias por visitar este README! Estamos listos para ayudarte a alcanzar el próximo nivel digital.
 
