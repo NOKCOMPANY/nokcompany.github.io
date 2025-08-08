@@ -8,7 +8,7 @@
 
 ---
 
-# ¡Bienvenidos a NOK COMPANY!
+# ¡Bienvenidos!
 
 **URL:** [nokcompany.cl](https://nokcompany.cl)
 
@@ -62,3 +62,4 @@ Somos **NOK SERVICES SPA**, un referente en desarrollo tecnológico para Chile y
 
 ## Créditos
 
+n0rt1z
