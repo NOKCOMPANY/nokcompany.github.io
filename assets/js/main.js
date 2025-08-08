@@ -1,18 +1,44 @@
 // =================================================================
 // SWUP - GESTOR DE TRANSICIONES DE PÁGINA
 // =================================================================
-const swup = new Swup({
-    animateHistoryBrowsing: true,
-    cache: true,
-    plugins: [
-        new SwupPreloadPlugin({
-            preloadHoveredLinks: true,
-        })
-    ]
-});
+let swup = window.swup;
 
-// Precargar la página de prueba para acelerar la transición
-// swup.preload('/test/');
+if (!swup) {
+    swup = new Swup({
+        animateHistoryBrowsing: true,
+        cache: true,
+        plugins: [
+            new SwupPreloadPlugin({
+                preloadHoveredLinks: true,
+            })
+        ]
+    });
+    window.swup = swup;
+
+    // Precargar la página de prueba para acelerar la transición
+    // swup.preload('/test/');
+
+    // Se ejecuta una vez cuando la página carga por primera vez
+    document.addEventListener('DOMContentLoaded', () => {
+        cleanUrl();
+        runPageScripts();
+    });
+
+    // Se ejecuta cada vez que Swup carga una nueva página
+    swup.hooks.on('page:view', () => {
+        cleanUrl();
+        runPageScripts();
+    });
+
+    // Clases para las animaciones de Swup
+    swup.hooks.on('visit:start', () => {
+        document.body.classList.add('is-changing');
+    });
+
+    swup.hooks.on('visit:end', () => {
+        document.body.classList.remove('is-changing');
+    });
+}
 
 // Variable para mantener la instancia del mapa y evitar reinicialización
 let mapInstance = null;
@@ -150,23 +176,3 @@ function cleanUrl() {
     }
 }
 
-// Se ejecuta una vez cuando la página carga por primera vez
-document.addEventListener('DOMContentLoaded', () => {
-    cleanUrl();
-    runPageScripts();
-});
-
-// Se ejecuta cada vez que Swup carga una nueva página
-swup.hooks.on('page:view', () => {
-    cleanUrl();
-    runPageScripts();
-});
-
-// Clases para las animaciones de Swup
-swup.hooks.on('visit:start', () => {
-    document.body.classList.add('is-changing');
-});
-
-swup.hooks.on('visit:end', () => {
-    document.body.classList.remove('is-changing');
-});
