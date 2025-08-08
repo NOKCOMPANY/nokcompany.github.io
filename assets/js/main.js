@@ -145,7 +145,9 @@ function runPageScripts() {
  * Elimina `index.html` de la URL actual para mantener rutas limpias.
  */
 function cleanUrl() {
-    history.replaceState(null, '', location.pathname.replace(/index\.html$/, ''));
+    if (location.pathname.endsWith('index.html')) {
+        history.replaceState(null, '', location.pathname.replace(/index\.html$/, ''));
+    }
 }
 
 // Se ejecuta una vez cuando la página carga por primera vez
