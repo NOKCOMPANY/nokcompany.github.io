@@ -19,7 +19,7 @@ Somos **NOK SERVICES SPA**, un referente en desarrollo tecnológico para Chile y
 
 ##  Qué ofrecemos
 
-![Typing SVG](https://readme-typing-svg.demolab.com?lines=Soluciones+Digitales;Infraestructura+Web:Machine+Learning;Procesos+de+Ingeniería;Posicionamiento+en+Redes+Sociales)
+![Typing SVG](https://readme-typing-svg.demolab.com?lines=Soluciones+Digitales;Infraestructura+Web;Machine+Learning;Procesos+de+Ingeniería+Segura;Posicionamiento+en+Redes+Sociales)
 
 - **Machine Learning**: soluciones inteligentes y datos que transforman negocios.
 - **Posicionamiento en Redes Sociales**: estrategias digitales que conectan tu marca con el público objetivo.
