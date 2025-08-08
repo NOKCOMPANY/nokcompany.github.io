@@ -19,6 +19,8 @@ Somos **NOK SERVICES SPA**, un referente en desarrollo tecnológico para Chile y
 
 ##  Qué ofrecemos
 
+![Typing SVG](https://readme-typing-svg.demolab.com?lines=Soluciones+Digitales;Infraestructura+Web:Machine+Learning;Procesos+de+Ingeniería;Posicionamiento+en+Redes+Sociales)
+
 - **Machine Learning**: soluciones inteligentes y datos que transforman negocios.
 - **Posicionamiento en Redes Sociales**: estrategias digitales que conectan tu marca con el público objetivo.
 - **Inteligencia Artificial** para nuevas oportunidades y optimización avanzada.
@@ -57,11 +59,19 @@ Somos **NOK SERVICES SPA**, un referente en desarrollo tecnológico para Chile y
 
 ---
 
-![Typing SVG](https://readme-typing-svg.demolab.com?lines=NOK+SERVICES+SPA;Soluciones+Digitales;Infraestructura+Web)
-
 ¡Gracias por visitar este README! Estamos listos para ayudarte a alcanzar el próximo nivel digital.
 
 ---
+
+    )    )     )           )    *    (               )     )  
+ ( /( ( /(  ( /(     (  ( /(  (  `   )\ )   (     ( /(  ( /(  
+ )\()))\()) )\())    )\ )\()) )\))( (()/(   )\    )\()) )\()) 
+((_)\((_)\|((_)\   (((_|(_)\ ((_)()\ /(_)|(((_)( ((_)\ ((_)\  
+ _((_) ((_)_ ((_)  )\___ ((_)(_()((_|_))  )\ _ )\ _((_)_ ((_) 
+| \| |/ _ \ |/ /  ((/ __/ _ \|  \/  | _ \ (_)_\(_) \| \ \ / / 
+| .` | (_) |' <    | (_| (_) | |\/| |  _/  / _ \ | .` |\ V /  
+|_|\_|\___/_|\_\    \___\___/|_|  |_|_|   /_/ \_\|_|\_| |_|   
+                                                              
 
 ## Créditos
 
