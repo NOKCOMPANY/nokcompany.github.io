@@ -11,7 +11,7 @@
 # ¡Bienvenidos!
 
 [![Website](https://img.shields.io/badge/site-nokcompany.cl-blue)](https://nokcompany.cl)
-![Status](https://img.shields.io/badge/status-online)
+![Status](https://img.shields.io/badge/status-online-succes)
 
 
 
