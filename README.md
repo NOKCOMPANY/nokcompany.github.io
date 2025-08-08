@@ -13,8 +13,10 @@
 [![Website](https://img.shields.io/badge/site-nokcompany.cl-blue)](https://nokcompany.cl)
 ![Status](https://img.shields.io/badge/status-online-succes)
 
-![GitHub Stats](https://github-readme-stats.vercel.app/api?username=NOKCOMPANY&show_icons=true)
 
+![Demo](./docs/demo.gif)
+<!-- o con HTML para controlar ancho -->
+<img src="./docs/demo.gif" alt="Demo" width="700">
 
 
 Somos **NOK SERVICES SPA**, un referente en desarrollo tecnológico para Chile y el mundo, especializados en **machine learning**, **posicionamiento en redes sociales**, **inteligencia artificial** y procesos de ingeniería segura. Estamos basados en Las Condes, Santiago de Chile. 
