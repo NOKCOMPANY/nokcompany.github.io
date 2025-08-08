@@ -13,7 +13,7 @@
 [![Website](https://img.shields.io/badge/site-nokcompany.cl-blue)](https://nokcompany.cl)
 ![Status](https://img.shields.io/badge/status-online-succes)
 
-![GitHub Stats](https://github-readme-stats.vercel.app/api?username=TU-USUARIO&show_icons=true)
+![GitHub Stats](https://github-readme-stats.vercel.app/api?username=NOKCOMPANY&show_icons=true)
 
 
 
