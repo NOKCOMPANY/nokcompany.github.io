@@ -12,7 +12,7 @@ const swup = new Swup({
 });
 
 // Precargar la página de prueba para acelerar la transición
-swup.preload('/test/');
+// swup.preload('/test/');
 
 // Variable para mantener la instancia del mapa y evitar reinicialización
 let mapInstance = null;
